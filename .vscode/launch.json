@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "SDJES86",
+            "cwd": "SDJES86",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "SDJES86 (profile mode)",
+            "cwd": "SDJES86",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "SDJES86 (release mode)",
+            "cwd": "SDJES86",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
