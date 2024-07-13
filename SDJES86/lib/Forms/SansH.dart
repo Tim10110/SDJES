@@ -1,22 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/Forms/SansH/sansh_data.dart';
+import 'package:flutter_application_2/Forms/SansH/sansh_data_model.dart';
 import 'package:flutter_application_2/Menus/FormsList.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
+import 'package:flutter_application_2/objectbox/controller.dart';
 import 'package:intl/intl.dart';
 import 'package:signature/signature.dart';
 import 'dart:async';
 import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-
-void main() async {
-  DatabaseHelper.createTables;
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SansH());
-}
 
 class ActiviteData {
   String nomActivite = '';
@@ -27,120 +21,6 @@ class ActiviteData {
   String? numCartePro; // Numero de la carte professionnelle pour catégorie 3
 }
 
-class SansHData {
-  //1ere section
-  String visiteRealiseePar = '',
-  enPresenceDe = '',
-  //2eme section
-  denomination = '',adresse = '',lieu = '',
-  numeroDeclaration = '',radioTypeAccueil = '',radio227_5 = '',radio227_29 = '',
-  observations227_5 = '',observations227_29 = '',
-  
-  //3eme section
-  capaciteAccueil = '',
-  moinsDe6AnsDeclares = '',entre6et13AnsDeclares = '',entre14et17AnsDeclares = '',
-  moinsDe6AnsPresents = '',entre6et13AnsPresents = '',entre14et17AnsPresents = '',
-  moinsDe6AnsHandi = '',entre6et13AnsHandi = '',entre14et17AnsHandi = '',
-  totalDeclares = '',totalPresents = '',totalHandi = '',
-  radio2324_13 = '',radio2324_14  = '',
-  observations2324_13 = '',observations2324_14  = '',
-  radioRegistreMineur = '', observationsRegistreMineur = '',
-  
-
-  directeurNom = '',directeurPrenom = '',directeurQualification = '',
-  radioTitulaireStagiaire = '',
-  nombreAnimQualif = '',nombreAnimStagiaires = '', nombreAnimNonQualif = '',totalAnim = '',
-  encadrementRequisMoinsDe6 = '',encadrementRequisPlusDe6 = '', totalAnimRequis = '',
-  
-  radio227_2 = '', observations227_2 = '', 
-  radioArrete3_5 = '', observationsArrete3_5 = '',
-  radio9_02_07 = '', observations9_02_07 = '',
-  radio227_8 = '', observations227_8 = '',
-  observationsCommunicationOrganisateur = '', observationsSavoirComportement = '',
-  observationsQualifPersonnel = '', observationsTempsDePrep = '', observationsReuBilan = '',
-  observationsEvalStg = '', 
-  
-  //Section 5
-  radioProjEdu = '',observationsProjEdu = '',
-  radioProjPeda = '',observationsProjPeda = '',radioRepresentant = '',
-  observationsRepresentant = '',observationsPE = '',observationsMoyens = '',
-  observationsMoyensEquipe = '',observationsBudget = '',observationsOrientation = '',
-  observationsDiagnostic = '',
-  observationsPolitique = '',observationsReorientation = '',
-  observationsPPCoherence = '',
-  observationsPPCara = '',observationsPPConcertation = '',
-  observationsPPModalite = '',observationsPPNature = '',observationsPPRepartition = '',
-  observationsSecuriteNuit = '',observationsPPSanteHandi = '',
-  observationsPPFonctEquipe = '',observationsPPEvalAccueil = '',observationsActivitesType = '',
-  observationsPrestataire = '',
-  observationsActiviteMineur = '',observationsRisques = '',observationsEchange = '',
-  observationsFormation = '',
-  radioEtape1 = '', 
-  radioEape2 = '',
-  nomPrenomEncadrantACM = '', qualifACM = '',
-  nomPrenomEncadrantGratuit = '', qualifgratuit = '', 
-  numeroCartePro = '',
-  radioAqua = '',
-  radioAutorisations = '',
-  
-  // Section 6
-  observationsVaccination = '',observationsAntecedents = '',observationsMineurTraitement = '', 
-  observationsAllergies = '', observationsOrdonnances = '', observationsRegistreSoins = '', 
-  observationsPremierSoins = '',observationsCommSecours = '',observationsNumUrgence = '',
-  radioVaccination = '',radioAntecedents = '',radioMineurTraitement = '', 
-  radioAllergies = '', radioOrdonnances = '', radioRegistreSoins = '', 
-  radioPremierSoins = '',radioCommSecours = '',radioNumUrgence = '',
-
-  //Section 7
-  radioCommissionSecu = '',radioAssurance = '',radioSignaletique = '',
-  radioEvacuation = '',radioExtincteur = '',radioDetecteur = '',
-  radioExercice = '',radioConditionsMeteo = '',radioHygiene = '',
-  radioSanitaire = '',radioSieste = '',radioEspacesAdapte = '',
-  observationsCommissionSecu = '',observationsAssurance = '',observationsSignaletique = '',
-  observationsEvacuation = '',observationsExtincteur = '',observationsDetecteur = '',
-  observationsExercice = '',observationsConditionsMeteo = '',observationsHygiene = '',
-  observationsSanitaire = '',observationsSieste = '',observationsEspacesAdapte = '',
-
-  //Section 8
-  radioCuisine = '',radioSalleResto = '',radioPiqueNique = '',
-  radioPlatsTemoins = '',radioTracabilite = '',radioStockage = '',
-  radioRefrigerateur = '',
-  observationsCuisine = '',observationsSalleResto = '',
-  observationsPlatsTemoins = '',observationsTracabilite = '',observationsStockage = '',
-  observationsRefrigerateur = '',observationsPiqueNique = '',
-  
-  //Section 9
-  radioGestion = '',radioVeille = '',radioPreventionChaleur = '',
-  radioEquipement = '',radioPieceFraiche = '',radioVentilateurs = '',
-  radioThermo = '',radioEauMenus = '',radioReserves = '',
-  radioOmbre = '',radioRafraichissement = '',radioGesteBarriere = '',
-  radioGestionPosteriori = '',
-  observationsGestion = '',observationsVeille = '',observationsPreventionChaleur = '',
-  observationsEquipement = '',observationsPieceFraiche = '',observationsVentilateurs = '',
-  observationsThermo = '',observationsEauMenus = '',observationsReserves = '',
-  observationsOmbre = '',observationsRafraichissement = '',observationsGesteBarriere = '',
-  observationsGestionPosteriori = '',
-
-  //Section 10
-  appreciationGenerale = '', prescriptionsEcheances = '',  controllerName = '';
-
-
-  DateTime dateVisite = DateTime(2001, 1, 1),
-  startDate = DateTime(2001, 1, 1),
-  endDate = DateTime(2001, 1, 1),
-  dateRenouvellement = DateTime(2001, 1, 1),
-  dateDebutFormation = DateTime(2001, 1, 1),
-  dateStartDerogation = DateTime(2001, 1, 1),
-  dateDuControle = DateTime(2001, 1, 1),
-  dateEndDerogation = DateTime(2001, 1, 1);
-
-  List<String> copyTo = [];
-  String copyToTest = '';
-  List<Point> signatureAuthorite = [];
-  List<ActiviteData>? activitesSecu;
-  
-}
-
 class SansH extends StatefulWidget {
   const SansH({super.key});
 
@@ -149,7 +29,7 @@ class SansH extends StatefulWidget {
 }
 
 class _SansHState extends State<SansH> {
-  final SansHData _sansHData = SansHData();
+  final SansHModel _sansHData = SansHModel();
 
   
   @override
@@ -167,7 +47,7 @@ class _SansHState extends State<SansH> {
 class MyFormContent {
   final List<String> sectionTitles;
 
-  SansHData  sansHData;
+  SansHModel sansHData;
 
   MyFormContent(this.sectionTitles, this.sansHData);
 
@@ -227,7 +107,7 @@ class MyFormContent {
 }
 
 class FirstPageSH extends StatefulWidget {
-  final SansHData sansHData; 
+  final SansHModel sansHData; 
 
   const FirstPageSH({super.key, required this.sansHData}); 
 
@@ -236,7 +116,6 @@ class FirstPageSH extends StatefulWidget {
 }
 
 class _FirstPageSHState extends State<FirstPageSH> {
-  final dbSH = DatabaseHelper.instance;
 
   final ScrollController _scrollController = ScrollController();
   int _currentStep = 0;
@@ -259,17 +138,16 @@ class _FirstPageSHState extends State<FirstPageSH> {
       appBar: AppBar(
         title: const Text("Rapport de contrôle et d'évaluation d'un accueil collectif de mineurs \nSans Hebergement"),
       ),
-      body: Expanded(
-        child: SingleChildScrollView(
-          //gérer le controller de scroll
-          child: MyFormContent(sectionTitles, widget.sansHData).buildFormContent(_currentStep),
-        ),
+      body: SingleChildScrollView(
+        //gérer le controller de scroll
+        child: MyFormContent(sectionTitles, widget.sansHData).buildFormContent(_currentStep),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (_currentStep > 0)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 setState(() {
                   _currentStep--; // Passer à la section précédente
@@ -281,6 +159,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
           const SizedBox(width: 10),
           if (_currentStep < sectionTitles.length - 1)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 setState(() {
                   _currentStep++; // Passer à la section suivante
@@ -291,6 +170,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
             ),
           if (_currentStep == sectionTitles.length - 1)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 print(" inserting data .. ");
                 insert();
@@ -347,6 +227,9 @@ class _FirstPageSHState extends State<FirstPageSH> {
 
   void insert() async {
 
+    int id = await widget.sansHData.insertToDB();
+    print(id);
+    /*
     Map<String, dynamic> row = {
 
       DatabaseHelper.visiteRealiseePar: widget.sansHData.visiteRealiseePar,
@@ -528,7 +411,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
 
     };
 
-    final id = await dbSH.insertSH(row);
+    final id = await DatabaseHelper().insertSH(row);
 
     for (var compteur = 0; compteur <= widget.sansHData.activitesSecu!.length-1 ; compteur++){ // Boucle ajout DB des activités
     Map<String, dynamic> rowactivite = {
@@ -542,12 +425,13 @@ class _FirstPageSHState extends State<FirstPageSH> {
     };
      try {
      print("Attempting to insert: $rowactivite");
-      final activites = await dbSH.insertActivite(rowactivite);
+      final activites = await DatabaseHelper().insertActivite(rowactivite);
      print('Inserted row id: $activites');
     } catch (err) {
       print("Error during insert: $err");
     }
     }
+    */
     Navigator.push(context, MaterialPageRoute(builder: (_) => const Data()));
   }
 
@@ -556,7 +440,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
 //___________________________SECTIONS______________________________________//
 
 class FirstSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   const FirstSection(this.sansHData, {super.key});
 
   @override
@@ -626,7 +510,7 @@ class _FirstSectionState extends State<FirstSection> {
 }
 
 class SecondSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   const SecondSection(this.sansHData, {super.key});
   
   @override
@@ -820,7 +704,7 @@ class _SecondSectionState extends State<SecondSection> {
 }
 
 class ThirdSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   const ThirdSection(this.sansHData, {super.key});
   
   @override
@@ -1197,7 +1081,7 @@ class _ThirdSectionState extends State<ThirdSection> {
 } 
 
 class FourthSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const FourthSection(this.sansHData, {super.key});
   
@@ -1678,7 +1562,7 @@ class _FourthSectionState extends State<FourthSection> {
 }
 
 class FifthSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const FifthSection(this.sansHData, {super.key});
   
@@ -2242,7 +2126,7 @@ class _FifthSectionState extends State<FifthSection> {
 }
 
 class SixthSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const SixthSection(this.sansHData, {super.key});
   
@@ -2481,7 +2365,7 @@ class _SixthSectionState extends State<SixthSection> {
 }
 
 class SeventhSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const SeventhSection(this.sansHData, {super.key});
   
@@ -2783,7 +2667,7 @@ class _SeventhSectionState extends State<SeventhSection> {
 }
 
 class EighthSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const EighthSection(this.sansHData, {super.key});
   
@@ -2977,7 +2861,7 @@ class _EighthSectionState extends State<EighthSection> {
 }
 
 class NinthSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const NinthSection(this.sansHData, {super.key});
   
@@ -3291,7 +3175,7 @@ class _NinthSectionState extends State<NinthSection> {
 }
 
 class TenthSection extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
   
   const TenthSection(this.sansHData, {super.key});
   
@@ -3413,9 +3297,11 @@ class _TenthSectionState extends State<TenthSection> {
                 ),
                 const SizedBox(width: 10),
                 FloatingActionButton(
+                  heroTag: null,
                   onPressed: () {
                     _prescriptionAuthoritySignatureController.clear();
                     widget.sansHData.signatureAuthorite = [];
+                    widget.sansHData.signatureAuthoriteJSON = [];
                   },
                   child: const Icon(Icons.clear),
                 ),
@@ -3763,7 +3649,7 @@ class CustomNumberField extends StatelessWidget {
 
 
 class SecuriteActivitesPhysiques extends StatefulWidget {
-  final SansHData sansHData;
+  final SansHModel sansHData;
 
   const SecuriteActivitesPhysiques(this.sansHData, {super.key});
 

@@ -41,7 +41,7 @@ class Home extends StatelessWidget {
                   child: CarouselSlider(
                     options: CarouselOptions(
                       height: MediaQuery.of(context).size.height * 0.35,
-                      enableInfiniteScroll: false,
+                     enableInfiniteScroll: false,
                       viewportFraction: 0.6,
                       enlargeCenterPage: true,
                       initialPage: 1,

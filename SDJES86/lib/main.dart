@@ -1,11 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:flutter_application_2/components/my_textfields.dart';
+import 'package:flutter_application_2/objectbox/controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper().initDatabase();
+  await objectBox.initialize();
   runApp(const MyApp());
 }
 
@@ -144,7 +147,7 @@ class OnboardingPage extends StatelessWidget {
       children: [
         if (showImage && imageUrl != null) // Afficher l'image si spécifié et non null
           Container(
-            height: MediaQuery.of(context).size.height * 0.8, // Ajuste la hauteur en fonction de la taille de l'écran
+            height: MediaQuery.of(context).size.height * 0.7, // Ajuste la hauteur en fonction de la taille de l'écran
             width: MediaQuery.of(context).size.width, // Utilise toute la largeur disponible
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), // Ajoute un cadre arrondi de rayon 20

@@ -280,16 +280,15 @@ class _FirstPageState extends State<FirstPage> {
       appBar: AppBar(
         title: const Text("FICHE DE VISITE D’UN  ACCUEIL DE SCOUTISME"),
       ),
-      body: Expanded(
-        child: SingleChildScrollView(
-          child: MyFormContent(sectionTitles, widget.scoutData).buildFormContent(_currentStep),
-        ),
+      body: SingleChildScrollView(
+        child: MyFormContent(sectionTitles, widget.scoutData).buildFormContent(_currentStep),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (_currentStep > 0)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 setState(() {
                   _currentStep--; // Passer à la section précédente
@@ -301,6 +300,7 @@ class _FirstPageState extends State<FirstPage> {
           const SizedBox(width: 10),
           if (_currentStep < sectionTitles.length - 1)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 setState(() {
                   _currentStep++; // Passer à la section suivante
@@ -311,6 +311,7 @@ class _FirstPageState extends State<FirstPage> {
             ),
           if (_currentStep == sectionTitles.length - 1)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 // Logique à exécuter lorsque l'utilisateur termine le formulaire
                 // Par exemple, sauvegardez les données du formulaire ou naviguez vers une autre page
@@ -2211,6 +2212,7 @@ class _NinthSectionState extends State<NinthSection> {
                 ),
                 const SizedBox(width: 10),
                 FloatingActionButton(
+                  heroTag: null,
                   onPressed: () {
                     _prescriptionAuthoritySignatureController.clear();
                     widget.scoutData.signatureAuthorite = [];

@@ -19,7 +19,6 @@ class FormEditPage extends StatefulWidget {
 }
 
 class _FormEditPageState extends State<FormEditPage> {
-  final dbSH = DatabaseHelper.instance;
   List<Map<String, dynamic>> monFormSH = [];
   late TextEditingController _capaciteAccueilController;
 
@@ -240,7 +239,7 @@ class _FormEditPageState extends State<FormEditPage> {
   }
 
     void _querySH() async {
-    final allRowsSH = await dbSH.queryAllRowsSH();
+    final allRowsSH = await DatabaseHelper().queryAllRowsSH();
     monFormSH = allRowsSH;
     setState(() {});
   }

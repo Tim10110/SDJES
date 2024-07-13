@@ -1,0 +1,912 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:7230219140994926528",
+      "lastPropertyId": "177:1021780385987541723",
+      "name": "SansHModel",
+      "properties": [
+        {
+          "id": "1:3731107754532441715",
+          "name": "formSHId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:29973381107203355",
+          "name": "visiteRealiseePar",
+          "type": 9
+        },
+        {
+          "id": "3:6295425216211183813",
+          "name": "enPresenceDe",
+          "type": 9
+        },
+        {
+          "id": "4:6965931004202675489",
+          "name": "denomination",
+          "type": 9
+        },
+        {
+          "id": "5:7712640229864942441",
+          "name": "adresse",
+          "type": 9
+        },
+        {
+          "id": "6:1290701479450961203",
+          "name": "lieu",
+          "type": 9
+        },
+        {
+          "id": "7:7517432306978122498",
+          "name": "numeroDeclaration",
+          "type": 9
+        },
+        {
+          "id": "8:474760528756722299",
+          "name": "radioTypeAccueil",
+          "type": 9
+        },
+        {
+          "id": "9:3665803390036640774",
+          "name": "radio227_5",
+          "type": 9
+        },
+        {
+          "id": "10:6550130566884638117",
+          "name": "radio227_29",
+          "type": 9
+        },
+        {
+          "id": "11:2790604668717787086",
+          "name": "observations227_5",
+          "type": 9
+        },
+        {
+          "id": "12:5522014584114689815",
+          "name": "observations227_29",
+          "type": 9
+        },
+        {
+          "id": "13:2616268475430717123",
+          "name": "capaciteAccueil",
+          "type": 9
+        },
+        {
+          "id": "14:5706112617379291059",
+          "name": "moinsDe6AnsDeclares",
+          "type": 9
+        },
+        {
+          "id": "15:7776413073271002563",
+          "name": "entre6et13AnsDeclares",
+          "type": 9
+        },
+        {
+          "id": "16:4509037461257681803",
+          "name": "entre14et17AnsDeclares",
+          "type": 9
+        },
+        {
+          "id": "17:8468739287639101815",
+          "name": "moinsDe6AnsPresents",
+          "type": 9
+        },
+        {
+          "id": "18:3612339145276900578",
+          "name": "entre6et13AnsPresents",
+          "type": 9
+        },
+        {
+          "id": "19:4916035016774248628",
+          "name": "entre14et17AnsPresents",
+          "type": 9
+        },
+        {
+          "id": "20:7408368341527886653",
+          "name": "moinsDe6AnsHandi",
+          "type": 9
+        },
+        {
+          "id": "21:6476127998126165866",
+          "name": "entre6et13AnsHandi",
+          "type": 9
+        },
+        {
+          "id": "22:8658433725897525002",
+          "name": "entre14et17AnsHandi",
+          "type": 9
+        },
+        {
+          "id": "23:6173399933631113873",
+          "name": "radio2324_13",
+          "type": 9
+        },
+        {
+          "id": "24:4477201020210334713",
+          "name": "radio2324_14",
+          "type": 9
+        },
+        {
+          "id": "25:1021869692015635160",
+          "name": "observations2324_13",
+          "type": 9
+        },
+        {
+          "id": "26:6181659317502138413",
+          "name": "observations2324_14",
+          "type": 9
+        },
+        {
+          "id": "27:3212136536672531096",
+          "name": "radioRegistreMineur",
+          "type": 9
+        },
+        {
+          "id": "28:2656772338040620512",
+          "name": "observationsRegistreMineur",
+          "type": 9
+        },
+        {
+          "id": "29:7386924177138051030",
+          "name": "directeurNom",
+          "type": 9
+        },
+        {
+          "id": "30:3513417009335156399",
+          "name": "directeurPrenom",
+          "type": 9
+        },
+        {
+          "id": "31:1815922169555908546",
+          "name": "directeurQualification",
+          "type": 9
+        },
+        {
+          "id": "32:4526598953559209133",
+          "name": "radioTitulaireStagiaire",
+          "type": 9
+        },
+        {
+          "id": "33:4121398677307207508",
+          "name": "nombreAnimQualif",
+          "type": 9
+        },
+        {
+          "id": "34:5141095101226269436",
+          "name": "nombreAnimStagiaires",
+          "type": 9
+        },
+        {
+          "id": "35:3290070017273697185",
+          "name": "nombreAnimNonQualif",
+          "type": 9
+        },
+        {
+          "id": "36:4740731669363652756",
+          "name": "encadrementRequisMoinsDe6",
+          "type": 9
+        },
+        {
+          "id": "37:6456785641666960477",
+          "name": "encadrementRequisPlusDe6",
+          "type": 9
+        },
+        {
+          "id": "38:4671492461177925113",
+          "name": "radio227_2",
+          "type": 9
+        },
+        {
+          "id": "39:575987714711964652",
+          "name": "observations227_2",
+          "type": 9
+        },
+        {
+          "id": "40:4402572848455956324",
+          "name": "radioArrete3_5",
+          "type": 9
+        },
+        {
+          "id": "41:2451972175782909047",
+          "name": "observationsArrete3_5",
+          "type": 9
+        },
+        {
+          "id": "42:5984590867103270420",
+          "name": "radio9_02_07",
+          "type": 9
+        },
+        {
+          "id": "43:6301776648685598836",
+          "name": "observations9_02_07",
+          "type": 9
+        },
+        {
+          "id": "44:6641706464658693209",
+          "name": "radio227_8",
+          "type": 9
+        },
+        {
+          "id": "45:5077814632903140147",
+          "name": "observations227_8",
+          "type": 9
+        },
+        {
+          "id": "46:3749638017267489618",
+          "name": "observationsCommunicationOrganisateur",
+          "type": 9
+        },
+        {
+          "id": "47:3243069793565860942",
+          "name": "observationsSavoirComportement",
+          "type": 9
+        },
+        {
+          "id": "48:982549842435741518",
+          "name": "observationsQualifPersonnel",
+          "type": 9
+        },
+        {
+          "id": "49:3204999381895932212",
+          "name": "observationsReuBilan",
+          "type": 9
+        },
+        {
+          "id": "50:3341534834950316377",
+          "name": "observationsEvalStg",
+          "type": 9
+        },
+        {
+          "id": "51:345132190024166484",
+          "name": "radioProjEdu",
+          "type": 9
+        },
+        {
+          "id": "52:683505332633023844",
+          "name": "observationsProjEdu",
+          "type": 9
+        },
+        {
+          "id": "53:542470586074020245",
+          "name": "radioProjPeda",
+          "type": 9
+        },
+        {
+          "id": "54:8881897344868616865",
+          "name": "observationsProjPeda",
+          "type": 9
+        },
+        {
+          "id": "55:2773831022056890342",
+          "name": "radioRepresentant",
+          "type": 9
+        },
+        {
+          "id": "56:7416608170722968746",
+          "name": "observationsRepresentant",
+          "type": 9
+        },
+        {
+          "id": "57:6108270539309464258",
+          "name": "observationsPE",
+          "type": 9
+        },
+        {
+          "id": "58:8786626811443573244",
+          "name": "observationsMoyens",
+          "type": 9
+        },
+        {
+          "id": "59:2629519986219873518",
+          "name": "observationsMoyensEquipe",
+          "type": 9
+        },
+        {
+          "id": "60:741265529665984825",
+          "name": "observationsBudget",
+          "type": 9
+        },
+        {
+          "id": "61:8142976047303304093",
+          "name": "observationsOrientation",
+          "type": 9
+        },
+        {
+          "id": "62:4158566253032082288",
+          "name": "observationsDiagnostic",
+          "type": 9
+        },
+        {
+          "id": "63:8484075695282017022",
+          "name": "observationsPolitique",
+          "type": 9
+        },
+        {
+          "id": "64:2752403530209598504",
+          "name": "observationsReorientation",
+          "type": 9
+        },
+        {
+          "id": "65:8896900560840397602",
+          "name": "observationsPPCoherence",
+          "type": 9
+        },
+        {
+          "id": "66:6491885605474878753",
+          "name": "observationsPPCara",
+          "type": 9
+        },
+        {
+          "id": "67:4236917795863521414",
+          "name": "observationsPPConcertation",
+          "type": 9
+        },
+        {
+          "id": "68:8188229156258987908",
+          "name": "observationsPPModalite",
+          "type": 9
+        },
+        {
+          "id": "69:1752260307720041890",
+          "name": "observationsPPNature",
+          "type": 9
+        },
+        {
+          "id": "70:154439723328922104",
+          "name": "observationsPPRepartition",
+          "type": 9
+        },
+        {
+          "id": "71:8418457981019794602",
+          "name": "observationsSecuriteNuit",
+          "type": 9
+        },
+        {
+          "id": "72:4868281107321639525",
+          "name": "observationsPPSanteHandi",
+          "type": 9
+        },
+        {
+          "id": "73:6325195536943299093",
+          "name": "observationsPPFonctEquipe",
+          "type": 9
+        },
+        {
+          "id": "74:7394796393623761911",
+          "name": "observationsPPEvalAccueil",
+          "type": 9
+        },
+        {
+          "id": "75:5106550515313201969",
+          "name": "observationsActivitesType",
+          "type": 9
+        },
+        {
+          "id": "76:8467602642055202744",
+          "name": "observationsPrestataire",
+          "type": 9
+        },
+        {
+          "id": "77:2656202742173391604",
+          "name": "observationsActiviteMineur",
+          "type": 9
+        },
+        {
+          "id": "78:2893898372334806305",
+          "name": "observationsRisques",
+          "type": 9
+        },
+        {
+          "id": "79:6345945741341295998",
+          "name": "observationsEchange",
+          "type": 9
+        },
+        {
+          "id": "80:4594011371618226678",
+          "name": "observationsFormation",
+          "type": 9
+        },
+        {
+          "id": "81:2011890009284882064",
+          "name": "radioAqua",
+          "type": 9
+        },
+        {
+          "id": "82:1165413610023398570",
+          "name": "radioAutorisations",
+          "type": 9
+        },
+        {
+          "id": "83:2599528735422225099",
+          "name": "observationsVaccination",
+          "type": 9
+        },
+        {
+          "id": "84:7591182383543536685",
+          "name": "observationsAntecedents",
+          "type": 9
+        },
+        {
+          "id": "85:8780757652961547577",
+          "name": "observationsMineurTraitement",
+          "type": 9
+        },
+        {
+          "id": "86:4493489339388540015",
+          "name": "observationsAllergies",
+          "type": 9
+        },
+        {
+          "id": "87:298846926329956525",
+          "name": "observationsOrdonnances",
+          "type": 9
+        },
+        {
+          "id": "88:4515190004855646229",
+          "name": "observationsRegistreSoins",
+          "type": 9
+        },
+        {
+          "id": "89:268975317915993349",
+          "name": "observationsPremierSoins",
+          "type": 9
+        },
+        {
+          "id": "90:5404575726765809597",
+          "name": "observationsCommSecours",
+          "type": 9
+        },
+        {
+          "id": "91:6450571866009536722",
+          "name": "observationsNumUrgence",
+          "type": 9
+        },
+        {
+          "id": "92:5056206729648212933",
+          "name": "radioVaccination",
+          "type": 9
+        },
+        {
+          "id": "93:25507436305572305",
+          "name": "radioAntecedents",
+          "type": 9
+        },
+        {
+          "id": "94:1491523572327005371",
+          "name": "radioMineurTraitement",
+          "type": 9
+        },
+        {
+          "id": "95:2247517522088256502",
+          "name": "radioAllergies",
+          "type": 9
+        },
+        {
+          "id": "96:198854510221835900",
+          "name": "radioOrdonnances",
+          "type": 9
+        },
+        {
+          "id": "97:7313265063475499162",
+          "name": "radioRegistreSoins",
+          "type": 9
+        },
+        {
+          "id": "98:6219800904000619068",
+          "name": "radioPremierSoins",
+          "type": 9
+        },
+        {
+          "id": "99:3557378587183886366",
+          "name": "radioCommSecours",
+          "type": 9
+        },
+        {
+          "id": "100:2461681435919465904",
+          "name": "radioNumUrgence",
+          "type": 9
+        },
+        {
+          "id": "101:4928391411946674666",
+          "name": "radioCommissionSecu",
+          "type": 9
+        },
+        {
+          "id": "102:1478598809313259731",
+          "name": "radioAssurance",
+          "type": 9
+        },
+        {
+          "id": "103:6099327937652619644",
+          "name": "radioSignaletique",
+          "type": 9
+        },
+        {
+          "id": "104:9017123800624392422",
+          "name": "radioEvacuation",
+          "type": 9
+        },
+        {
+          "id": "105:739338119797225957",
+          "name": "radioExtincteur",
+          "type": 9
+        },
+        {
+          "id": "106:788674981711494082",
+          "name": "radioDetecteur",
+          "type": 9
+        },
+        {
+          "id": "107:9103696425183232513",
+          "name": "radioExercice",
+          "type": 9
+        },
+        {
+          "id": "108:3038691833168620093",
+          "name": "radioConditionsMeteo",
+          "type": 9
+        },
+        {
+          "id": "109:5453039380585257731",
+          "name": "radioHygiene",
+          "type": 9
+        },
+        {
+          "id": "110:7270601916380234957",
+          "name": "radioSanitaire",
+          "type": 9
+        },
+        {
+          "id": "111:1144849299040480395",
+          "name": "radioSieste",
+          "type": 9
+        },
+        {
+          "id": "112:6500125637498031938",
+          "name": "radioEspacesAdapte",
+          "type": 9
+        },
+        {
+          "id": "113:3585756306422953082",
+          "name": "observationsCommissionSecu",
+          "type": 9
+        },
+        {
+          "id": "114:8407467313346394558",
+          "name": "observationsAssurance",
+          "type": 9
+        },
+        {
+          "id": "115:5381338414974200609",
+          "name": "observationsSignaletique",
+          "type": 9
+        },
+        {
+          "id": "116:7215190892575453801",
+          "name": "observationsEvacuation",
+          "type": 9
+        },
+        {
+          "id": "117:2209525668455642042",
+          "name": "observationsExtincteur",
+          "type": 9
+        },
+        {
+          "id": "118:1966290584624574913",
+          "name": "observationsDetecteur",
+          "type": 9
+        },
+        {
+          "id": "119:6530616892534375870",
+          "name": "observationsExercice",
+          "type": 9
+        },
+        {
+          "id": "120:1245291789421718833",
+          "name": "observationsConditionsMeteo",
+          "type": 9
+        },
+        {
+          "id": "121:1132796074525908571",
+          "name": "observationsHygiene",
+          "type": 9
+        },
+        {
+          "id": "122:5955753943014499807",
+          "name": "observationsSanitaire",
+          "type": 9
+        },
+        {
+          "id": "123:3201560025005657351",
+          "name": "observationsSieste",
+          "type": 9
+        },
+        {
+          "id": "124:8961240812935101256",
+          "name": "observationsEspacesAdapte",
+          "type": 9
+        },
+        {
+          "id": "125:57502024651315649",
+          "name": "radioCuisine",
+          "type": 9
+        },
+        {
+          "id": "126:1157094587813848946",
+          "name": "radioSalleResto",
+          "type": 9
+        },
+        {
+          "id": "127:2393947712011007318",
+          "name": "radioPiqueNique",
+          "type": 9
+        },
+        {
+          "id": "128:4398559812130388808",
+          "name": "radioPlatsTemoins",
+          "type": 9
+        },
+        {
+          "id": "129:2567146027073875450",
+          "name": "radioTracabilite",
+          "type": 9
+        },
+        {
+          "id": "130:7499087751381344691",
+          "name": "radioStockage",
+          "type": 9
+        },
+        {
+          "id": "131:6647653357839070016",
+          "name": "radioRefrigerateur",
+          "type": 9
+        },
+        {
+          "id": "132:5103706957340365215",
+          "name": "observationsCuisine",
+          "type": 9
+        },
+        {
+          "id": "133:1276455939195896702",
+          "name": "observationsSalleResto",
+          "type": 9
+        },
+        {
+          "id": "134:7491671483682547403",
+          "name": "observationsPlatsTemoins",
+          "type": 9
+        },
+        {
+          "id": "135:2507746391840855112",
+          "name": "observationsTracabilite",
+          "type": 9
+        },
+        {
+          "id": "136:9088380940401897071",
+          "name": "observationsStockage",
+          "type": 9
+        },
+        {
+          "id": "137:5746679706945313847",
+          "name": "observationsRefrigerateur",
+          "type": 9
+        },
+        {
+          "id": "138:2996946019040905209",
+          "name": "observationsPiqueNique",
+          "type": 9
+        },
+        {
+          "id": "139:5806355512485736862",
+          "name": "radioGestion",
+          "type": 9
+        },
+        {
+          "id": "140:5123423499498206940",
+          "name": "radioVeille",
+          "type": 9
+        },
+        {
+          "id": "141:4431964840705625604",
+          "name": "radioPreventionChaleur",
+          "type": 9
+        },
+        {
+          "id": "142:2417261128826807758",
+          "name": "radioEquipement",
+          "type": 9
+        },
+        {
+          "id": "143:8091001633388537725",
+          "name": "radioPieceFraiche",
+          "type": 9
+        },
+        {
+          "id": "144:6968735919704229175",
+          "name": "radioVentilateurs",
+          "type": 9
+        },
+        {
+          "id": "145:1829424846725607241",
+          "name": "radioThermo",
+          "type": 9
+        },
+        {
+          "id": "146:1573285751712576335",
+          "name": "radioEauMenus",
+          "type": 9
+        },
+        {
+          "id": "147:2631800275768389518",
+          "name": "radioReserves",
+          "type": 9
+        },
+        {
+          "id": "148:8451324610449639226",
+          "name": "radioOmbre",
+          "type": 9
+        },
+        {
+          "id": "149:7435537114997056308",
+          "name": "radioRafraichissement",
+          "type": 9
+        },
+        {
+          "id": "150:1888341649801269381",
+          "name": "radioGesteBarriere",
+          "type": 9
+        },
+        {
+          "id": "151:745573906862670047",
+          "name": "radioGestionPosteriori",
+          "type": 9
+        },
+        {
+          "id": "152:7163177518688787335",
+          "name": "observationsGestion",
+          "type": 9
+        },
+        {
+          "id": "153:2501215345204210894",
+          "name": "observationsVeille",
+          "type": 9
+        },
+        {
+          "id": "154:4473647005516578421",
+          "name": "observationsPreventionChaleur",
+          "type": 9
+        },
+        {
+          "id": "155:8324675470659036738",
+          "name": "observationsEquipement",
+          "type": 9
+        },
+        {
+          "id": "156:9158660404186443365",
+          "name": "observationsPieceFraiche",
+          "type": 9
+        },
+        {
+          "id": "157:8240499738891980163",
+          "name": "observationsVentilateurs",
+          "type": 9
+        },
+        {
+          "id": "158:4122297175480195143",
+          "name": "observationsThermo",
+          "type": 9
+        },
+        {
+          "id": "159:5199616837048611884",
+          "name": "observationsEauMenus",
+          "type": 9
+        },
+        {
+          "id": "160:2175879987900209244",
+          "name": "observationsReserves",
+          "type": 9
+        },
+        {
+          "id": "161:367145624268037759",
+          "name": "observationsOmbre",
+          "type": 9
+        },
+        {
+          "id": "162:8490415121951327963",
+          "name": "observationsRafraichissement",
+          "type": 9
+        },
+        {
+          "id": "163:54494617519774157",
+          "name": "observationsGesteBarriere",
+          "type": 9
+        },
+        {
+          "id": "164:3079319744554046928",
+          "name": "observationsGestionPosteriori",
+          "type": 9
+        },
+        {
+          "id": "165:7768357341907823890",
+          "name": "appreciationGenerale",
+          "type": 9
+        },
+        {
+          "id": "166:2788434988513324683",
+          "name": "prescriptionsEcheances",
+          "type": 9
+        },
+        {
+          "id": "167:882443812906959090",
+          "name": "controllerName",
+          "type": 9
+        },
+        {
+          "id": "168:780939296591993514",
+          "name": "dateVisite",
+          "type": 10
+        },
+        {
+          "id": "169:6800184054556011242",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "170:4800880550886619186",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "171:4408370569361721292",
+          "name": "dateRenouvellement",
+          "type": 10
+        },
+        {
+          "id": "172:1740268265854911297",
+          "name": "dateDebutFormation",
+          "type": 10
+        },
+        {
+          "id": "173:9124189260160760885",
+          "name": "dateStartDerogation",
+          "type": 10
+        },
+        {
+          "id": "174:331319303802009454",
+          "name": "dateDuControle",
+          "type": 10
+        },
+        {
+          "id": "175:8300811268205853194",
+          "name": "dateEndDerogation",
+          "type": 10
+        },
+        {
+          "id": "176:7935126491745394035",
+          "name": "copyTo",
+          "type": 30
+        },
+        {
+          "id": "177:1021780385987541723",
+          "name": "signatureAuthoriteJSON",
+          "type": 30
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:7230219140994926528",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

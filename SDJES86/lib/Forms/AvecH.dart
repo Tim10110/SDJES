@@ -9,12 +9,11 @@ import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:flutter_application_2/DB/Db_manager.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 
 void main() {
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
+  //sqfliteFfiInit();
+  //databaseFactory = databaseFactoryFfi;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const AvecH());
 }
@@ -969,8 +968,6 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  final dbAH = DatabaseHelper.instance;
-
 
   int _currentStep = 0;
   List<String> sectionTitles = [
@@ -992,16 +989,15 @@ class _FirstPageState extends State<FirstPage> {
       appBar: AppBar(
         title: const Text("Rapport de contrôle et d'évaluation d'un accueil collectif de mineurs \nAvec Hebergement"),
       ),
-      body: Expanded(
-      child: SingleChildScrollView(
+      body: SingleChildScrollView(
           child: MyFormContent(sectionTitles, widget.avecHData).buildFormContent(_currentStep),
         ),
-      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (_currentStep > 0)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 setState(() {
                   _currentStep--; // Passer à la section précédente
@@ -1013,6 +1009,7 @@ class _FirstPageState extends State<FirstPage> {
           const SizedBox(width: 10),
           if (_currentStep < sectionTitles.length - 1)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 setState(() {
                   _currentStep++; // Passer à la section suivante
@@ -1023,6 +1020,7 @@ class _FirstPageState extends State<FirstPage> {
             ),
           if (_currentStep == sectionTitles.length - 1)
             FloatingActionButton.extended(
+              heroTag: null,
               onPressed: () {
                 insert();
               },
@@ -1269,7 +1267,7 @@ class _FirstPageState extends State<FirstPage> {
 
     };
 
-    final id = await dbAH.insertAH(row); // insertion dans la DB AH de row
+    final id = await DatabaseHelper().insertAH(row); // insertion dans la DB AH de row
 
     for (var compteur = 0; compteur <= widget.avecHData.activitesSecu!.length-1 ; compteur++){ // Boucle ajout DB des activités
     Map<String, dynamic> rowactivite = {
@@ -1283,7 +1281,7 @@ class _FirstPageState extends State<FirstPage> {
     };
     try {
      print("Attempting to insert: $rowactivite");
-      final activites = await dbAH.insertActivite(rowactivite);
+      final activites = await DatabaseHelper().insertActivite(rowactivite);
      print('Inserted row id: $activites');
     } catch (err) {
       print("Error during insert: $err");
@@ -4476,6 +4474,7 @@ class _TenthSectionState extends State<TenthSection> {
                 ),
                 const SizedBox(width: 10),
                 FloatingActionButton(
+                  heroTag: null,
                   onPressed: () {
                     _prescriptionAuthoritySignatureController.clear();
                     widget.avecHData.signatureAuthorite = [];

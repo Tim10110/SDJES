@@ -1,13 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-
 
 class DatabaseHelper {
 
@@ -235,31 +230,42 @@ class DatabaseHelper {
   static const mouvementOrga = 'mouvOrga';
   static const nomCoord = 'nomCoord';
 
-
   // crée une classe singleton
-  DatabaseHelper._privateconstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateconstructor();
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  factory DatabaseHelper() => _instance;
+  DatabaseHelper._internal();
+  late Database? _database;
 
-// only have a single app-wide reference to the database
-  static Database? _database;
-  Future<Database> get database async => _database ??= await _initDatabase();
+  /// Fetches the database instance
+  Future<Database> get database async{
+    if(_database != null){
+      return _database!;
+    }
+    await initDatabase();
+    return _database!;
+  }
 
-  // this opens the database (and creates it if it doesn't exist)
-  _initDatabase() async {
-    
+  /// Declare the database path and structure, as well as creating tables
+  Future<void> initDatabase() async{
     sqfliteFfiInit(); // Assurez-vous d'initialiser sqflite_common_ffi
-    databaseFactory = databaseFactoryFfi;
-
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, 'db_forms.db');
-    return await openDatabase(path,
-        version: _databaseVersion, onCreate: createTables);
+    //databaseFactory = databaseFactoryFfi;
+    String path = join(await getDatabasesPath(), 'db_forms.db');
+    _database = await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: createTables,
+      onUpgrade: ((db, oldVersion, newVersion) async{
+        if(oldVersion < 2){
+          
+        }
+      })
+    );
   }
 
   static Future<void> createTables(Database database, int version) async {
     print ("creating table..");
     await database.execute('''CREATE TABLE IF NOT EXISTS $formSH (
-        $formSHId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $formSHId INTEGER PRIMARY KEY AUTOINCREMENT, //
         $visiteRealiseePar TEXT NOT NULL,
         $enPresenceDe TEXT NOT NULL,
         $dateVisite INTEGER NOT NULL DEFAULT (CAST(strftime('%s','now') AS INTEGER)),
@@ -668,22 +674,22 @@ class DatabaseHelper {
 // Manipulation de la DB SansH
 
   Future<int> insertSH(Map<String, dynamic> row) async {
-    Database? db = await instance.database;
+    final db = await database;
     return await db.insert(formSH, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRowsSH() async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.query(formSH);
   }
   
   Future<int> updateSH(Map<String, dynamic> row) async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.update(formSH, row, where: '$formSHId= ?', whereArgs: [formSHId]);
   }
 
-  static Future<void> deleteSH(int id) async {
-    final db = await instance.database;
+  Future<void> deleteSH(int id) async {
+    final db = await database;
     try {
       await db.delete(formSH, where: '$id = ?', whereArgs: [id]);
     } catch (err) { debugPrint("Something went wrong when deleting a form: $err");
@@ -693,22 +699,22 @@ class DatabaseHelper {
 // Manipulation de la DB AvecH
 
   Future<int> insertAH(Map<String, dynamic> row) async {
-    Database? db = await instance.database;
+    final db = await database;
     return await db.insert(formAH, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRowsAH() async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.query(formAH);
   }
   
   Future<int> updateAH(Map<String, dynamic> row) async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.update(formAH, row, where: '$formAHId= ?', whereArgs: [formAHId]);
   }
 
-  static Future<void> deleteAH(int id) async {
-    final db = await instance.database;
+  Future<void> deleteAH(int id) async {
+    final db = await database;
     try {
       await db.delete(formAH, where: '$id = ?', whereArgs: [id]);
     } catch (err) { debugPrint("Something went wrong when deleting a form: $err");
@@ -718,22 +724,22 @@ class DatabaseHelper {
   // Manipulation de la DB Scout
 
   Future<int> insertScout(Map<String, dynamic> row) async {
-    Database? db = await instance.database;
+    final db = await database;
     return await db.insert(formScout, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRowsScout() async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.query(formScout);
   }
   
   Future<int> updateScout(Map<String, dynamic> row) async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.update(formScout, row, where: '$formScoutId= ?', whereArgs: [formScoutId]);
   }
 
-  static Future<void> deleteScout(int id) async {
-    final db = await instance.database;
+  Future<void> deleteScout(int id) async {
+    final db = await database;
     try {
       await db.delete(formScout, where: '$id = ?', whereArgs: [id]);
     } catch (err) { debugPrint("Something went wrong when deleting a form: $err");
@@ -743,22 +749,22 @@ class DatabaseHelper {
   // Manipulation de la DB Activite
 
   Future<int> insertActivite(Map<String, dynamic> row) async {
-    Database? db = await instance.database;
+    final db = await database;
     return await db.insert(tableActivite, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRowsActivite() async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.query(tableActivite);
   }
   
   Future<int> updateActivite(Map<String, dynamic> row) async {
-    Database db = await instance.database;
+    final db = await database;
     return await db.update(tableActivite, row, where: '$formSHId= ?', whereArgs: [formSHId]);
   }
 
-  static Future<void> deleteActivite(int id) async {
-    final db = await instance.database;
+  Future<void> deleteActivite(int id) async {
+    final db = await database;
     try {
       await db.delete(tableActivite, where: '$id = ?', whereArgs: [id]);
     } catch (err) { debugPrint("Something went wrong when deleting a form: $err");

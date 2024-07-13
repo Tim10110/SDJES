@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Forms/FormEditPage.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:flutter_application_2/DB/Db_manager.dart';
+import 'package:flutter_application_2/objectbox/controller.dart';
+import 'package:flutter_application_2/app.dart' as objectbox;
 
 class Data extends StatefulWidget {
   const Data({super.key});
@@ -10,18 +12,18 @@ class Data extends StatefulWidget {
 }
 
 class _DataState extends State<Data> {
-
-  final db = DatabaseHelper.instance;
-
   List<Map<String, dynamic>> displaySH = [];
   List<Map<String, dynamic>> displayAH = [];
   List<Map<String, dynamic>> displayScout = [];
+
+  List<objectbox.SansHModel> displaySHModel = [];
 
   @override
   void initState() {
     super.initState();
     _querySH();
     _queryAH();
+    _retrieveSH();
   }
 
   @override
@@ -54,7 +56,39 @@ class _DataState extends State<Data> {
           child: TabBarView(
             children: [
               // Contenu pour la catégorie "Sans Hébergement"
-               ListView.builder(
+
+              ListView.builder(
+                itemCount: displaySHModel.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var item = displaySHModel[index];
+                  return GestureDetector(
+                    onTap: () {
+                      //FormEditPage(idDB: idDB)
+                    /*  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FormEditPage(avecHData: item),
+                        ),
+                      );*/
+                    },
+                    child: Card(
+                      margin: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        title: Text('Item ${item.formSHId}'), // Adjust this according to your data structure
+                        subtitle: Text(item.directeurNom), // Adjust this according to your data structure
+                        onTap: () {
+                          /*Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FormEditPage(idDB: item.formSHId)),
+                          );*/
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              /*ListView.builder(
                 itemCount: displaySH.length,
                 itemBuilder: (BuildContext context, int index) {
                   var item = displaySH[index];
@@ -84,7 +118,8 @@ class _DataState extends State<Data> {
                     ),
                   );
                 },
-              ),
+              ),*/
+
               // Contenu pour la catégorie "Avec Hébergement"
               ListView.builder(
                 itemCount: displayAH.length,
@@ -139,43 +174,52 @@ class _DataState extends State<Data> {
         ),
         persistentFooterButtons: [
           Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width,
             alignment: Alignment.center,
             color: Colors.grey[200], // Couleur de fond pour la partie tout en bas
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Action à effectuer lorsque le bouton Modifier est cliqué
-                  },
-                  icon: const Icon(Icons.edit),
-                  label: const Text('Modifier'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue[300],
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Action à effectuer lorsque le bouton Supprimer est cliqué
-                  },
-                  icon: const Icon(Icons.delete),
-                  label: const Text('Supprimer'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red[300],
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Action à effectuer lorsque le bouton Exporter est cliqué
-                  },
-                  icon: const Icon(Icons.send),
-                  label: const Text('Exporter'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[300],
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Action à effectuer lorsque le bouton Modifier est cliqué
+                      },
+                      icon: const Icon(Icons.edit),
+                      label: const Text('Modifier'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[300],
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Action à effectuer lorsque le bouton Supprimer est cliqué
+                      },
+                      icon: const Icon(Icons.delete),
+                      label: const Text('Supprimer'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red[300],
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Action à effectuer lorsque le bouton Exporter est cliqué
+                      },
+                      icon: const Icon(Icons.send),
+                      label: const Text('Exporter'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[300],
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -221,15 +265,22 @@ class _DataState extends State<Data> {
   }
 
   void _querySH() async {
-    final allRowsSH = await db.queryAllRowsSH();
+    final allRowsSH = await DatabaseHelper().queryAllRowsSH();
     print('query all rows:');
     allRowsSH.forEach(print);
     displaySH = allRowsSH;
     setState(() {});
   }
 
+  void _retrieveSH() async {
+    final _dataSH = objectBox.retrieveSansH();
+    _dataSH.forEach(print);
+    displaySHModel = _dataSH;
+    setState(() {});
+  }
+
   void _queryAH() async {
-    final allRowsAH = await db.queryAllRowsAH(); 
+    final allRowsAH = await DatabaseHelper().queryAllRowsAH(); 
     print('query all rows:');
     allRowsAH.forEach(print);
     displayAH = allRowsAH;
