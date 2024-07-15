@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Forms/SansH.dart';
-import 'package:flutter_application_2/app.dart' as objectbox;
+import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
 import 'package:flutter_application_2/objectbox/controller.dart';
 import 'package:signature/signature.dart';
 

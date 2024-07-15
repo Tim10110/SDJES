@@ -1,5 +1,5 @@
 import 'package:flutter_application_2/objectbox.g.dart';
-import 'package:flutter_application_2/app.dart' as objectbox;
+import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 

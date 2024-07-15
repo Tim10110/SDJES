@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
@@ -248,7 +249,9 @@ class DatabaseHelper {
   /// Declare the database path and structure, as well as creating tables
   Future<void> initDatabase() async{
     sqfliteFfiInit(); // Assurez-vous d'initialiser sqflite_common_ffi
-    //databaseFactory = databaseFactoryFfi;
+    if(Platform.isWindows) {
+      databaseFactory = databaseFactoryFfi;
+    }
     String path = join(await getDatabasesPath(), 'db_forms.db');
     _database = await openDatabase(
       path,

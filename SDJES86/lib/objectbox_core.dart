@@ -1,6 +1,8 @@
+import 'package:flutter_application_2/main.dart';
 import 'package:objectbox/objectbox.dart';
 import 'dart:core';
 
+@reflector
 @Entity()
 class SansHModel {
   @Id()
@@ -38,7 +40,7 @@ class SansHModel {
   String observations2324_14  = '';
   String radioRegistreMineur = ''; 
   String observationsRegistreMineur = '';
-  
+
   String directeurNom = '';
   String directeurPrenom = '';
   String directeurQualification = '';

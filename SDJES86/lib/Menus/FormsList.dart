@@ -1,9 +1,21 @@
+import 'dart:io';
+import 'dart:math';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_2/main.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:docx_template/docx_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Forms/FormEditPage.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:flutter_application_2/objectbox/controller.dart';
-import 'package:flutter_application_2/app.dart' as objectbox;
+import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:reflectable/capability.dart';
+import 'package:reflectable/mirrors.dart';
+import 'package:uuid/uuid.dart';
+import 'package:reflectable/reflectable.dart' as r;
 
 class Data extends StatefulWidget {
   const Data({super.key});
@@ -21,9 +33,182 @@ class _DataState extends State<Data> {
   @override
   void initState() {
     super.initState();
-    _querySH();
-    _queryAH();
+    //_querySH();
+    //_queryAH();
     _retrieveSH();
+  }
+
+  void exportTemplateData() async {
+    final PermissionStatus status;
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if(androidInfo.version.sdkInt <= 32) {
+      status = await Permission.storage.request();
+    } else {
+      status = await Permission.manageExternalStorage.request();
+    }
+    if (!status.isGranted) {
+      print('Permission denied');
+      return;
+    }
+    
+    final data = await rootBundle.load('assets/docx/template.docx');
+    final bytes = data.buffer.asUint8List();
+    final docx = await DocxTemplate.fromBytes(bytes);
+
+    final testFileData = await rootBundle.load('assets/Form.png');
+    final testFileContent = testFileData.buffer.asUint8List();
+
+    /*
+    final listNormal = ['Foo', 'Bar', 'Baz'];
+    final listBold = ['ooF', 'raB', 'zaB'];
+
+    final contentList = <Content>[];
+
+    final b = listBold.iterator;
+    for (var n in listNormal) {
+      b.moveNext();
+
+      final c = PlainContent("value")
+        ..add(TextContent("normal", n))
+        ..add(TextContent("bold", b.current));
+      contentList.add(c);
+    }
+    */
+
+    Content c = Content();
+    c
+      //..add(TextContent("docname", "Simple docname"))
+      //..add(TextContent("passport", "Passport NE0323 4456673"))
+      ..add(TableContent("table", [
+        RowContent()
+          ..add(TextContent("key1", "Paul"))
+          ..add(TextContent("key2", "Viberg"))
+          ..add(TextContent("key3", "Engineer"))
+          ..add(ImageContent('img', testFileContent)),
+        RowContent()
+          ..add(TextContent("key1", "Alex"))
+          ..add(TextContent("key2", "Houser"))
+          ..add(TextContent("key3", "CEO & Founder"))
+          ..add(ListContent("tablelist", [
+            TextContent("value", "Mercedes-Benz C-Class S205"),
+            TextContent("value", "Lexus LX 570")
+          ]))
+          ..add(ImageContent('img', testFileContent))
+      ]));
+      /*
+      ..add(ListContent("list", [
+        TextContent("value", "Engine")
+          ..add(ListContent("listnested", contentList)),
+        TextContent("value", "Gearbox"),
+        TextContent("value", "Chassis")
+      ]))
+      ..add(ListContent("plainlist", [
+        PlainContent("plainview")
+          ..add(TableContent("table", [
+            RowContent()
+              ..add(TextContent("key1", "Paul"))
+              ..add(TextContent("key2", "Viberg"))
+              ..add(TextContent("key3", "Engineer")),
+            RowContent()
+              ..add(TextContent("key1", "Alex"))
+              ..add(TextContent("key2", "Houser"))
+              ..add(TextContent("key3", "CEO & Founder"))
+              ..add(ListContent("tablelist", [
+                TextContent("value", "Mercedes-Benz C-Class S205"),
+                TextContent("value", "Lexus LX 570")
+              ]))
+          ])),
+        PlainContent("plainview")
+          ..add(TableContent("table", [
+            RowContent()
+              ..add(TextContent("key1", "Nathan"))
+              ..add(TextContent("key2", "Anceaux"))
+              ..add(TextContent("key3", "Music artist"))
+              ..add(ListContent(
+                  "tablelist", [TextContent("value", "Peugeot 508")])),
+            RowContent()
+              ..add(TextContent("key1", "Louis"))
+              ..add(TextContent("key2", "Houplain"))
+              ..add(TextContent("key3", "Music artist"))
+              ..add(ListContent("tablelist", [
+                TextContent("value", "Range Rover Velar"),
+                TextContent("value", "Lada Vesta SW Sport")
+              ]))
+          ])),
+      ]))
+      ..add(ListContent("multilineList", [
+        PlainContent("multilinePlain")
+          ..add(TextContent('multilineText', 'line 1')),
+        PlainContent("multilinePlain")
+          ..add(TextContent('multilineText', 'line 2')),
+        PlainContent("multilinePlain")
+          ..add(TextContent('multilineText', 'line 3'))
+      ]))
+      ..add(TextContent('multilineText2', 'line 1\nline 2\n line 3'))
+      ..add(ImageContent('img', testFileContent));
+      */
+
+    final d = await docx.generate(c);
+    Directory directory = Directory('/storage/emulated/0/Download');
+    await Directory(directory.path).create(recursive: true);
+    final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
+    final of = File(filepath);
+    of.createSync();
+    print(of.existsSync());
+    if (d != null) {
+      await of.writeAsBytes(d);
+      print('Document ${of.path} generated! and ${of.existsSync()} exists');
+    }
+  }
+
+  void exportData() async {
+    /*
+    final PermissionStatus status;
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if(androidInfo.version.sdkInt <= 32) {
+      status = await Permission.storage.request();
+    } else {
+      status = await Permission.manageExternalStorage.request();
+    }
+    if (!status.isGranted) {
+      print('Permission denied');
+      return;
+    }
+    
+    final data = await rootBundle.load('assets/docx/template.docx');
+    final bytes = data.buffer.asUint8List();
+    final docx = await DocxTemplate.fromBytes(bytes);
+    */
+
+    List<objectbox.SansHModel> sansHList = objectBox.retrieveSansH();
+
+    Content c = Content();
+    c
+      .add(TableContent("table", List.generate(sansHList.length, (i) {
+        InstanceMirror aMirror = reflector.reflect(sansHList[i]);
+        List<String> keys = aMirror.type.declarations.keys.toList();
+        keys.remove(aMirror.type.simpleName);
+        List<String> values = List.generate(keys.length, (i) => (aMirror.invokeGetter(keys[i])).toString());
+        final RowContent row = RowContent();
+        for(int i = 0; i < keys.length; i++) {
+          row.add(TextContent(keys[i], values[i]));
+        }
+        return row;
+      })));
+    
+    /*
+    final d = await docx.generate(c);
+    Directory directory = Directory('/storage/emulated/0/Download');
+    await Directory(directory.path).create(recursive: true);
+    final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
+    final of = File(filepath);
+    of.createSync();
+    print(of.existsSync());
+    if (d != null) {
+      await of.writeAsBytes(d);
+      print('Document ${of.path} generated! and ${of.existsSync()} exists');
+    }
+    */
   }
 
   @override
@@ -211,6 +396,7 @@ class _DataState extends State<Data> {
                     ElevatedButton.icon(
                       onPressed: () {
                         // Action à effectuer lorsque le bouton Exporter est cliqué
+                        exportData();
                       },
                       icon: const Icon(Icons.send),
                       label: const Text('Exporter'),

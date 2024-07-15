@@ -4,10 +4,31 @@ import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:flutter_application_2/components/my_textfields.dart';
 import 'package:flutter_application_2/objectbox/controller.dart';
+import 'package:reflectable/reflectable.dart';
+import 'main.reflectable.dart';
+
+// Annotate with this class to enable reflection.
+class Reflector extends Reflectable {
+  const Reflector()
+      : super(
+        invokingCapability, 
+        typeCapability, 
+        metadataCapability, 
+        libraryCapability, 
+        declarationsCapability,
+        staticInvokeCapability,
+        instanceInvokeCapability,
+        topLevelInvokeCapability,
+        correspondingSetterQuantifyCapability
+      ); // Request the capability to invoke methods.
+}
+
+const reflector = Reflector();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper().initDatabase();
+  //await DatabaseHelper().initDatabase();
+  initializeReflectable();
   await objectBox.initialize();
   runApp(const MyApp());
 }
@@ -22,6 +43,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+final PageController onboardingPageController = PageController();
 
 class OnboardingScreen extends StatelessWidget {
   final List<OnboardingPageModel> pages = [
@@ -57,6 +80,7 @@ class OnboardingScreen extends StatelessWidget {
       body: Stack(
         children: [
           PageView.builder(
+            controller: onboardingPageController,
             itemCount: pages.length,
             itemBuilder: (context, index) {
               return index == pages.length - 1
@@ -112,12 +136,18 @@ class _SwipeHintAnimationState extends State<SwipeHintAnimation> {
     return AnimatedOpacity(
       opacity: _isVisible ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 200),
-      child: const Padding(
+      child: Padding(
         padding: EdgeInsets.all(20), // Espacement autour de l'icône
-        child: Icon(
-          Icons.arrow_forward_ios,
-          size: 60, // Taille de l'icône augmentée
-          color:  Color.fromARGB(255, 0, 0, 0),
+        child: GestureDetector(
+          onTap: () => onboardingPageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.bounceInOut
+          ),
+          child: Icon(
+            Icons.arrow_forward_ios,
+            size: 60, // Taille de l'icône augmentée
+            color:  Color.fromARGB(255, 0, 0, 0),
+          ),
         ),
       ),
     );
