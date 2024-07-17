@@ -97,8 +97,18 @@ class SansHModel {
   String observationsEchange = ''; 
   String observationsFormation = ''; 
   String radioAqua = ''; 
-  String radioAutorisations = ''; 
+  String radioAutorisations = '';
+
+  // Minibus Section 
   
+  String radioUtilisationMinibus ='';
+  String radioTransportsCommuns = '';
+  String radioCarnetsRoute = '';
+  String radioConnaissanceSecurite = '';
+  String radioQualiteConduite = '';
+  String radioConditionsTravail = '';
+
+
   // Section 6
   String observationsVaccination = ''; 
   String observationsAntecedents = ''; 

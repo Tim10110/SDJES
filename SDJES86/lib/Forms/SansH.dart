@@ -5,12 +5,11 @@ import 'package:flutter_application_2/Forms/SansH/sansh_data.dart';
 import 'package:flutter_application_2/Forms/SansH/sansh_data_model.dart';
 import 'package:flutter_application_2/Menus/FormsList.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
+import 'package:flutter_application_2/components/my_textfields.dart';
 import 'package:flutter_application_2/objectbox/controller.dart';
 import 'package:intl/intl.dart';
 import 'package:signature/signature.dart';
 import 'dart:async';
-import 'package:flutter_application_2/DB/Db_manager.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class ActiviteData {
   String nomActivite = '';
@@ -92,11 +91,12 @@ class MyFormContent {
                 if (currentStep == 2) ThirdSection(sansHData),
                 if (currentStep == 3) FourthSection(sansHData),
                 if (currentStep == 4) FifthSection(sansHData),
-                if (currentStep == 5) SixthSection(sansHData),
-                if (currentStep == 6) SeventhSection(sansHData),
-                if (currentStep == 7) EighthSection(sansHData),
-                if (currentStep == 8) NinthSection(sansHData),
-                if (currentStep == 9) TenthSection(sansHData),
+                if (currentStep == 5) MiniBusSection(sansHData),
+                if (currentStep == 6) SixthSection(sansHData),
+                if (currentStep == 7) SeventhSection(sansHData),
+                if (currentStep == 8) EighthSection(sansHData),
+                if (currentStep == 9) NinthSection(sansHData),
+                if (currentStep == 10) TenthSection(sansHData),
               ],
             ),
           ),
@@ -125,6 +125,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
     'Effectif de mineurs (Art. R. 227-2, R. 227-7 du CASF, arrêté du 22.9.2006 et art. L. 2324-1 du CSP)',
     'Equipe d\'encadrants (Art. R. 227-12 et suivants du CASF)',
     'Education et pédagogie (Art. R. 227-23 à R227-26 du CASF et circulaire n° DJEPVA/DJEPVAA3/2011/236)',
+    'Sécurité des déplacements en minibus (Instruction du 21 juin 2024)',
     'Sanitaire (Art. R.227-6 et suivants du CASF et arrêté du 20 février 2003 relatif au suivi sanitaire des mineurs mentionnés à l’art. L.227-4 du CASF)',
     'Locaux  (Art. R. 227 – 5 du CASF)',
     'Restauration (Règlement CE n°178/2002)',
@@ -230,187 +231,6 @@ class _FirstPageSHState extends State<FirstPageSH> {
     int id = await widget.sansHData.insertToDB();
     print(id);
     /*
-    Map<String, dynamic> row = {
-
-      DatabaseHelper.visiteRealiseePar: widget.sansHData.visiteRealiseePar,
-      DatabaseHelper.enPresenceDe: widget.sansHData.enPresenceDe,
-      DatabaseHelper.dateVisite: widget.sansHData.dateVisite.millisecondsSinceEpoch,
-      DatabaseHelper.denomination: widget.sansHData.denomination,
-      DatabaseHelper.adresse: widget.sansHData.adresse,
-      DatabaseHelper.lieu: widget.sansHData.lieu,
-      DatabaseHelper.numeroDeclaration: widget.sansHData.numeroDeclaration,
-      DatabaseHelper.startDate: widget.sansHData.startDate.millisecondsSinceEpoch,
-      DatabaseHelper.endDate: widget.sansHData.endDate.millisecondsSinceEpoch,
-      DatabaseHelper.radioTypeAccueil: widget.sansHData.radioTypeAccueil,
-      DatabaseHelper.radio227_5: widget.sansHData.radio227_5,
-      DatabaseHelper.obs227_5: widget.sansHData.observations227_5,
-      DatabaseHelper.radio227_29: widget.sansHData.radio227_29,
-      DatabaseHelper.obs227_29: widget.sansHData.observations227_29,
-      DatabaseHelper.capAcc: widget.sansHData.capaciteAccueil,
-      DatabaseHelper.moinsDe6AnsDeclares: widget.sansHData.moinsDe6AnsDeclares,
-      DatabaseHelper.entre6et13AnsDeclares: widget.sansHData.entre6et13AnsDeclares,
-      DatabaseHelper.entre14et17AnsDeclares: widget.sansHData.entre14et17AnsDeclares,
-      DatabaseHelper.moinsDe6AnsPresents: widget.sansHData.moinsDe6AnsPresents,
-      DatabaseHelper.entre6et13AnsPresents: widget.sansHData.entre6et13AnsPresents,
-      DatabaseHelper.entre14et17AnsPresents: widget.sansHData.entre14et17AnsPresents,
-      DatabaseHelper.moinsDe6AnsHandi: widget.sansHData.moinsDe6AnsHandi,
-      DatabaseHelper.entre6et13AnsHandi: widget.sansHData.entre6et13AnsHandi,
-      DatabaseHelper.entre14et17AnsHandi: widget.sansHData.entre14et17AnsHandi,
-      DatabaseHelper.radio2324_13: widget.sansHData.radio2324_13,
-      DatabaseHelper.observations2324_13: widget.sansHData.observations2324_13,
-      DatabaseHelper.radio2324_14: widget.sansHData.radio2324_14,
-      DatabaseHelper.observations2324_14: widget.sansHData.observations2324_14,
-      DatabaseHelper.radioRegistreMineur: widget.sansHData.radioRegistreMineur,
-      DatabaseHelper.observationsRegistreMineur: widget.sansHData.observationsRegistreMineur,
-      DatabaseHelper.directeurNom: widget.sansHData.directeurNom,
-      DatabaseHelper.directeurPrenom: widget.sansHData.directeurPrenom,
-      DatabaseHelper.directeurQualification: widget.sansHData.directeurQualification,
-      DatabaseHelper.radioTitulaireStagiaire: widget.sansHData.radioTitulaireStagiaire,
-      DatabaseHelper.dateRenouvellement: widget.sansHData.dateRenouvellement.millisecondsSinceEpoch,
-      DatabaseHelper.dateDebutFormation: widget.sansHData.dateDebutFormation.millisecondsSinceEpoch,
-      DatabaseHelper.dateStartDerogation: widget.sansHData.dateStartDerogation.millisecondsSinceEpoch,
-      DatabaseHelper.dateEndDerogation: widget.sansHData.dateEndDerogation.millisecondsSinceEpoch,
-      DatabaseHelper.nombreAnimQualif: widget.sansHData.nombreAnimQualif,
-      DatabaseHelper.nombreAnimStagiaires: widget.sansHData.nombreAnimStagiaires,
-      DatabaseHelper.nombreAnimNonQualif: widget.sansHData.nombreAnimNonQualif,
-      DatabaseHelper.encadrementRequisMoinsDe6: widget.sansHData.encadrementRequisMoinsDe6,
-      DatabaseHelper.encadrementRequisPlusDe6: widget.sansHData.encadrementRequisPlusDe6,
-      DatabaseHelper.radio227_2: widget.sansHData.radio227_2,
-      DatabaseHelper.observations227_2: widget.sansHData.observations227_2,
-      DatabaseHelper.radioArrete3_5: widget.sansHData.radioArrete3_5,
-      DatabaseHelper.observationsArrete3_5: widget.sansHData.observationsArrete3_5,
-      DatabaseHelper.radio9_02_07: widget.sansHData.radio9_02_07,
-      DatabaseHelper.observations9_02_07: widget.sansHData.observations9_02_07,
-      DatabaseHelper.radio227_8: widget.sansHData.radio227_8,
-      DatabaseHelper.observations227_8: widget.sansHData.observations227_8,
-      DatabaseHelper.observationsCommunicationOrganisateur: widget.sansHData.observationsCommunicationOrganisateur,
-      DatabaseHelper.observationsSavoirComportement: widget.sansHData.observationsSavoirComportement,
-      DatabaseHelper.observationsQualifPersonnel: widget.sansHData.observationsQualifPersonnel,
-      DatabaseHelper.observationsReuBilan: widget.sansHData.observationsReuBilan,
-      DatabaseHelper.observationsEvalStg: widget.sansHData.observationsEvalStg,
-      DatabaseHelper.radioProjEdu: widget.sansHData.radioProjEdu,
-      DatabaseHelper.observationsProjEdu: widget.sansHData.observationsProjEdu,
-      DatabaseHelper.radioProjPeda: widget.sansHData.radioProjPeda,
-      DatabaseHelper.observationsProjPeda: widget.sansHData.observationsProjPeda,
-      DatabaseHelper.radioRepresentant: widget.sansHData.radioRepresentant,
-      DatabaseHelper.observationsRepresentant: widget.sansHData.observationsRepresentant,
-      DatabaseHelper.observationsPE: widget.sansHData.observationsPE,
-      DatabaseHelper.observationsMoyens: widget.sansHData.observationsMoyens,
-      DatabaseHelper.observationsMoyensEquipe: widget.sansHData.observationsMoyensEquipe,
-      DatabaseHelper.observationsBudget: widget.sansHData.observationsBudget,
-      DatabaseHelper.observationsOrientation: widget.sansHData.observationsOrientation,
-      DatabaseHelper.observationsDiagnostic: widget.sansHData.observationsDiagnostic,
-      DatabaseHelper.observationsPolitique: widget.sansHData.observationsPolitique,
-      DatabaseHelper.observationsReorientation: widget.sansHData.observationsReorientation,
-      DatabaseHelper.observationsPPCoherence: widget.sansHData.observationsPPCoherence,
-      DatabaseHelper.observationsPPCara: widget.sansHData.observationsPPCara,
-      DatabaseHelper.observationsPPConcertation: widget.sansHData.observationsPPConcertation,
-      DatabaseHelper.observationsPPModalite: widget.sansHData.observationsPPModalite,
-      DatabaseHelper.observationsPPNature: widget.sansHData.observationsPPNature,
-      DatabaseHelper.observationsPPRepartition: widget.sansHData.observationsPPRepartition,
-      DatabaseHelper.observationsSecuriteNuit: widget.sansHData.observationsSecuriteNuit,
-      DatabaseHelper.observationsPPSanteHandi: widget.sansHData.observationsPPSanteHandi,
-      DatabaseHelper.observationsPPFonctEquipe: widget.sansHData.observationsPPFonctEquipe,
-      DatabaseHelper.observationsPPEvalAccueil: widget.sansHData.observationsPPEvalAccueil,
-      DatabaseHelper.observationsActivitesType: widget.sansHData.observationsActivitesType,
-      DatabaseHelper.observationsPrestataire: widget.sansHData.observationsPrestataire,
-      DatabaseHelper.observationsActiviteMineur: widget.sansHData.observationsActiviteMineur,
-      DatabaseHelper.observationsRisques: widget.sansHData.observationsRisques,
-      DatabaseHelper.observationsEchange: widget.sansHData.observationsEchange,
-      DatabaseHelper.observationsFormation: widget.sansHData.observationsFormation,
-      DatabaseHelper.radioAqua: widget.sansHData.radioAqua,
-      DatabaseHelper.radioAutorisations: widget.sansHData.radioAutorisations,
-      DatabaseHelper.radioVaccination: widget.sansHData.radioVaccination,
-      DatabaseHelper.observationsVaccination: widget.sansHData.observationsVaccination,
-      DatabaseHelper.radioAntecedents: widget.sansHData.radioAntecedents,
-      DatabaseHelper.observationsAntecedents: widget.sansHData.observationsAntecedents,
-      DatabaseHelper.radioMineurTraitement: widget.sansHData.radioMineurTraitement,
-      DatabaseHelper.observationsMineurTraitement: widget.sansHData.observationsMineurTraitement,
-      DatabaseHelper.radioAllergies: widget.sansHData.radioAllergies,
-      DatabaseHelper.observationsAllergies: widget.sansHData.observationsAllergies,
-      DatabaseHelper.radioOrdonnances: widget.sansHData.radioOrdonnances,
-      DatabaseHelper.observationsOrdonnances: widget.sansHData.observationsOrdonnances,
-      DatabaseHelper.radioRegistreSoins: widget.sansHData.radioRegistreSoins,
-      DatabaseHelper.observationsRegistreSoins: widget.sansHData.observationsRegistreSoins,
-      DatabaseHelper.radioPremierSoins: widget.sansHData.radioPremierSoins,
-      DatabaseHelper.observationsPremierSoins: widget.sansHData.observationsPremierSoins,
-      DatabaseHelper.radioCommSecours: widget.sansHData.radioCommSecours,
-      DatabaseHelper.observationsCommSecours: widget.sansHData.observationsCommSecours,
-      DatabaseHelper.radioNumUrgence: widget.sansHData.radioNumUrgence,
-      DatabaseHelper.observationsNumUrgence: widget.sansHData.observationsNumUrgence,
-      DatabaseHelper.radioCommissionSecu: widget.sansHData.radioCommissionSecu,
-      DatabaseHelper.observationsCommissionSecu: widget.sansHData.observationsCommissionSecu,
-      DatabaseHelper.radioAssurance: widget.sansHData.radioAssurance,
-      DatabaseHelper.observationsAssurance: widget.sansHData.observationsAssurance,
-      DatabaseHelper.radioSignaletique: widget.sansHData.radioSignaletique,
-      DatabaseHelper.observationsSignaletique: widget.sansHData.observationsSignaletique,
-      DatabaseHelper.radioEvacuation: widget.sansHData.radioEvacuation,
-      DatabaseHelper.observationsEvacuation: widget.sansHData.observationsEvacuation,
-      DatabaseHelper.radioExtincteur: widget.sansHData.radioExtincteur,
-      DatabaseHelper.observationsExtincteur: widget.sansHData.observationsExtincteur,
-      DatabaseHelper.radioDetecteur: widget.sansHData.radioDetecteur,
-      DatabaseHelper.observationsDetecteur: widget.sansHData.observationsDetecteur,
-      DatabaseHelper.radioExercice: widget.sansHData.radioExercice,
-      DatabaseHelper.observationsExercice: widget.sansHData.observationsExercice,
-      DatabaseHelper.radioConditionsMeteo: widget.sansHData.radioConditionsMeteo,
-      DatabaseHelper.observationsConditionsMeteo: widget.sansHData.observationsConditionsMeteo,
-      DatabaseHelper.radioHygiene: widget.sansHData.radioHygiene,
-      DatabaseHelper.observationsHygiene: widget.sansHData.observationsHygiene,
-      DatabaseHelper.radioSanitaire: widget.sansHData.radioSanitaire,
-      DatabaseHelper.observationsSanitaire: widget.sansHData.observationsSanitaire,
-      DatabaseHelper.radioSieste: widget.sansHData.radioSieste,
-      DatabaseHelper.observationsSieste: widget.sansHData.observationsSieste,
-      DatabaseHelper.radioEspacesAdapte: widget.sansHData.radioEspacesAdapte,
-      DatabaseHelper.observationsEspacesAdapte: widget.sansHData.observationsEspacesAdapte,
-      DatabaseHelper.radioCuisine: widget.sansHData.radioCuisine,
-      DatabaseHelper.observationsCuisine: widget.sansHData.observationsCuisine,
-      DatabaseHelper.radioSalleResto: widget.sansHData.radioSalleResto,
-      DatabaseHelper.observationsSalleResto: widget.sansHData.observationsSalleResto,
-      DatabaseHelper.radioPlatsTemoins: widget.sansHData.radioPlatsTemoins,
-      DatabaseHelper.observationsPlatsTemoins: widget.sansHData.observationsPlatsTemoins,
-      DatabaseHelper.radioTracabilite: widget.sansHData.radioTracabilite,
-      DatabaseHelper.observationsTracabilite: widget.sansHData.observationsTracabilite,
-      DatabaseHelper.radioStockage: widget.sansHData.radioStockage,
-      DatabaseHelper.observationsStockage: widget.sansHData.observationsStockage,
-      DatabaseHelper.radioRefrigerateur: widget.sansHData.radioRefrigerateur,
-      DatabaseHelper.observationsRefrigerateur: widget.sansHData.observationsRefrigerateur,
-      DatabaseHelper.radioPiqueNique: widget.sansHData.radioPiqueNique,
-      DatabaseHelper.observationsPiqueNique: widget.sansHData.observationsPiqueNique,
-      DatabaseHelper.radioGestion: widget.sansHData.radioGestion,
-      DatabaseHelper.observationsGestion: widget.sansHData.observationsGestion,
-      DatabaseHelper.radioVeille: widget.sansHData.radioVeille,
-      DatabaseHelper.observationsVeille: widget.sansHData.observationsVeille,
-      DatabaseHelper.radioPreventionChaleur: widget.sansHData.radioPreventionChaleur,
-      DatabaseHelper.observationsPreventionChaleur: widget.sansHData.observationsPreventionChaleur,
-      DatabaseHelper.radioEquipement: widget.sansHData.radioEquipement,
-      DatabaseHelper.observationsEquipement: widget.sansHData.observationsEquipement,
-      DatabaseHelper.radioPieceFraiche: widget.sansHData.radioPieceFraiche,
-      DatabaseHelper.observationsPieceFraiche: widget.sansHData.observationsPieceFraiche,
-      DatabaseHelper.radioVentilateurs: widget.sansHData.radioVentilateurs,
-      DatabaseHelper.observationsVentilateurs: widget.sansHData.observationsVentilateurs,
-      DatabaseHelper.radioThermo: widget.sansHData.radioThermo,
-      DatabaseHelper.observationsThermo: widget.sansHData.observationsThermo,
-      DatabaseHelper.radioEauMenus: widget.sansHData.radioEauMenus,
-      DatabaseHelper.observationsEauMenus: widget.sansHData.observationsEauMenus,
-      DatabaseHelper.radioReserves: widget.sansHData.radioReserves,
-      DatabaseHelper.observationsReserves: widget.sansHData.observationsReserves,
-      DatabaseHelper.radioOmbre: widget.sansHData.radioOmbre,
-      DatabaseHelper.observationsOmbre: widget.sansHData.observationsOmbre,
-      DatabaseHelper.radioRafraichissement: widget.sansHData.radioRafraichissement,
-      DatabaseHelper.observationsRafraichissement: widget.sansHData.observationsRafraichissement,
-      DatabaseHelper.radioGesteBarriere: widget.sansHData.radioGesteBarriere,
-      DatabaseHelper.observationsGesteBarriere: widget.sansHData.observationsGesteBarriere,
-      DatabaseHelper.radioGestionPosteriori: widget.sansHData.radioGestionPosteriori,
-      DatabaseHelper.observationsGestionPosteriori: widget.sansHData.observationsGestionPosteriori,
-      DatabaseHelper.appreciationGenerale: widget.sansHData.appreciationGenerale,
-      DatabaseHelper.prescriptionsEcheances: widget.sansHData.prescriptionsEcheances,
-      DatabaseHelper.copyTo: widget.sansHData.copyToTest,
-      DatabaseHelper.controllername: widget.sansHData.controllerName,
-      DatabaseHelper.dateDuControle: widget.sansHData.dateDuControle.millisecondsSinceEpoch,
-      DatabaseHelper.signatureAuthorite: widget.sansHData.signatureAuthorite.join('|')
-
-    };
-
     final id = await DatabaseHelper().insertSH(row);
 
     for (var compteur = 0; compteur <= widget.sansHData.activitesSecu!.length-1 ; compteur++){ // Boucle ajout DB des activités
@@ -2125,6 +1945,120 @@ class _FifthSectionState extends State<FifthSection> {
   }
 }
 
+class MiniBusSection extends StatefulWidget {
+  final SansHModel sansHData;
+
+  const MiniBusSection (this.sansHData, {super.key});
+
+  @override
+  _MiniBusSectionState createState() => _MiniBusSectionState();
+}
+
+class _MiniBusSectionState extends State<MiniBusSection > {
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Préparation des déplacement en minibus',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,),
+          ),
+
+          const SizedBox(height: 20),  
+
+          RadioGroup(
+            title: "Les modalités d'utilisation du minibus apparaissent dans le projet pédagogique",
+            choices: const ['OUI', 'NON', 'En projet'],
+            defaultChoice: widget.sansHData.radioUtilisationMinibus,
+            onChanged: (value) {
+              setState(() {
+                widget.sansHData.radioUtilisationMinibus = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 20),
+          
+          RadioGroup(
+            title: "Les transports en commun sont privilégiés",
+            choices: const ['OUI', 'NON', 'En projet'],
+            defaultChoice: widget.sansHData.radioTransportsCommuns,
+            onChanged: (value) {
+              setState(() {
+                widget.sansHData.radioTransportsCommuns = value;
+              });
+            },
+          ),
+         
+          const SizedBox(height: 20),
+
+          RadioGroup(
+            title: "Pour les longs trajets des carnets de routes sont prévus",
+            referenceText: "(itinéraire, temps de trajet, temps de pause, rotation des conducteurs). \n"
+            "Pauses: impératives au moins toutes les deux heures et doivent durer minimum 15 minutes.",
+            choices: const ['OUI', 'NON', 'En projet'],
+            defaultChoice: widget.sansHData.radioCarnetsRoute,
+            onChanged: (value) {
+              setState(() {
+                widget.sansHData.radioCarnetsRoute = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          RadioGroup(
+            title: "Un temps est prévu pour s'assurer que les conducteurs connaissent les consignes de sécurité",
+            referenceText: "Le conducteur doit s’assurer que tout passager âgé de moins de 18 ans qu'il transporte est maintenu soit par un système \n"
+            "homologué de retenue pour enfant (UN R129 aussi appelé « i-Size »), soit par une ceinture de sécurité. \n"
+            "Le transport sur un siège avant d’un enfant de moins de 10 ans est interdit sauf exceptions.",
+            choices: const ['OUI', 'NON', 'En projet'],
+            defaultChoice: widget.sansHData.radioConnaissanceSecurite,
+            onChanged: (value) {
+              setState(() {
+                widget.sansHData.radioConnaissanceSecurite = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          RadioGroup(
+            title: "S'assurer que le conducteur présente des qualités de conduite en sécurité",
+            choices: const ['OUI', 'NON', 'En projet'],
+            defaultChoice: widget.sansHData.radioQualiteConduite,
+            onChanged: (value) {
+              setState(() {
+                widget.sansHData.radioQualiteConduite = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          RadioGroup(
+            title: "L'organisateur et le directeur sont attentifs aux conditions de travail et à l'état de fatigue des animateurs.",
+            choices: const ['OUI', 'NON', 'En projet'],
+            defaultChoice: widget.sansHData.radioConditionsTravail,
+            onChanged: (value) {
+              setState(() {
+                widget.sansHData.radioConditionsTravail = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+        ],
+      ),
+    );
+  }
+}
+
+
 class SixthSection extends StatefulWidget {
   final SansHModel sansHData;
   
@@ -3314,338 +3248,7 @@ class _TenthSectionState extends State<TenthSection> {
   }
 }
 
-//___________________________STYLES______________________________________//
-
-class CustomTextField extends StatelessWidget {
-  final String labelText;
-  final TextEditingController controller;
-  final ValueChanged<String>? onChanged; // Ajout du paramètre onChanged
-
-  const CustomTextField({
-    super.key,
-    required this.labelText,
-    required this.controller,
-    this.onChanged, // Définition du paramètre onChanged
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      onChanged: onChanged, // Utilisation du paramètre onChanged
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(color: Colors.black),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.black),
-        ),
-      ),
-    );
-  }
-}
-
-class LongTextField extends StatelessWidget {
-  final String labelText;
-  final TextEditingController controller;
-  final ValueChanged<String>? onChanged;
-
-  const LongTextField({super.key,
-    required this.labelText,
-    required this.controller,
-    this.onChanged, // Définition du paramètre onChanged
-  });
-
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      maxLines: null, // Permet un nombre illimité de lignes
-      controller: controller,
-      onChanged: onChanged, 
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(color: Colors.black),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.black),
-        ),
-      ),
-    );
-  }
-}
-
-class RadioGroup extends StatefulWidget {
-  final String title;
-  final List<String> choices;
-  final String? referenceText;
-  final String? defaultChoice;
-  final ValueChanged<String>? onChanged;
-
-  const RadioGroup({super.key, 
-    required this.title,
-    required this.choices,
-    this.referenceText,
-    this.defaultChoice,
-    this.onChanged,
-  });
-
-  @override
-  _RadioGroupState createState() => _RadioGroupState();
-}
-
-class _RadioGroupState extends State<RadioGroup> {
-  String? _selectedChoice;
-  bool _isExpanded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.defaultChoice != null && widget.defaultChoice!.isNotEmpty) {
-      _selectedChoice = widget.defaultChoice;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Text(
-                widget.title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            if (widget.referenceText != null && widget.referenceText!.isNotEmpty)
-              IconButton(
-                icon: Icon(_isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down),
-                onPressed: () {
-                  setState(() {
-                    _isExpanded = !_isExpanded;
-                  });
-                },
-              ),
-          ],
-        ),
-        if (widget.referenceText != null && widget.referenceText!.isNotEmpty && _isExpanded) ...[
-          Text(
-            widget.referenceText!,
-            style: const TextStyle(fontStyle: FontStyle.italic),
-          ),
-          const SizedBox(height: 10),
-        ],
-        Column(
-          children: widget.choices.map((choice) {
-            return RadioListTile(
-              title: Text(choice),
-              value: choice,
-              groupValue: _selectedChoice,
-              onChanged: (value) {
-                setState(() {
-                  _selectedChoice = value.toString();
-                });
-                if (widget.onChanged != null) {
-                  widget.onChanged!(value.toString());
-                }
-              },
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
-
-class CheckboxGroup extends StatefulWidget {
-  final String title;
-  final List<String> choices;
-  final String? referenceText;
-  final List<String>? defaultChoices;
-  final ValueChanged<List<String>>? onChanged;
-
-  const CheckboxGroup({super.key, 
-    required this.title,
-    required this.choices,
-    this.referenceText,
-    this.defaultChoices,
-    this.onChanged,
-  });
-
-  @override
-  _CheckboxGroupState createState() => _CheckboxGroupState();
-}
-
-class _CheckboxGroupState extends State<CheckboxGroup> {
-  final List<String> _selectedChoices = [];
-  bool _isExpanded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.defaultChoices != null && widget.defaultChoices!.isNotEmpty) {
-      _selectedChoices.addAll(widget.defaultChoices!);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            if (widget.referenceText != null && widget.referenceText!.isNotEmpty)
-              IconButton(
-                icon: Icon(_isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down),
-                onPressed: () {
-                  setState(() {
-                    _isExpanded = !_isExpanded;
-                  });
-                },
-              ),
-            Flexible(
-              child: Text(
-                widget.title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-        if (widget.referenceText != null && widget.referenceText!.isNotEmpty && _isExpanded) ...[
-          Text(
-            widget.referenceText!,
-            style: const TextStyle(fontStyle: FontStyle.italic),
-          ),
-          const SizedBox(height: 10),
-        ],
-        Column(
-          children: widget.choices.map((choice) {
-            return CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading, // Place le bouton à gauche du texte
-              title: Text(choice),
-              value: _selectedChoices.contains(choice),
-              onChanged: (value) {
-                setState(() {
-                  if (value == true) {
-                    _selectedChoices.add(choice);
-                  } else {
-                    _selectedChoices.remove(choice);
-                  }
-                });
-                if (widget.onChanged != null) {
-                  widget.onChanged!(_selectedChoices);
-                }
-              },
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
-
-
-class DateField extends StatefulWidget {
-  final String labelText;
-  final TextEditingController controller; // Ajout du contrôleur
-  final Function(DateTime) onDateSelected;
-
-  const DateField({
-    super.key,
-    required this.labelText,
-    required this.controller,
-    required this.onDateSelected,
-  });
-
-  @override
-  _DateFieldState createState() => _DateFieldState();
-}
-
-class _DateFieldState extends State<DateField> {
-  DateTime? _selectedDate;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-        widget.controller.text = picked.toString(); // Vous pouvez personnaliser le format de date ici
-        widget.onDateSelected(picked);
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _selectDate(context),
-      child: TextFormField(
-        controller: widget.controller,
-        enabled: false, // Désactiver la saisie manuelle
-        decoration: InputDecoration(
-          labelText: widget.labelText,
-          labelStyle: const TextStyle(color: Colors.black),
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: Colors.black),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomNumberField extends StatelessWidget {
-  final String labelText;
-  final void Function(int) onChanged;
-  final TextEditingController controller;
-
-  const CustomNumberField({super.key, required this.labelText, required this.onChanged, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      controller: controller,
-      onChanged: (value) {
-        // Vérifier si la valeur est vide
-        if (value.isEmpty) {
-          onChanged(0);
-          return;
-        }
-        // Convertir la chaîne en entier
-        int intValue = int.tryParse(value) ?? 0;
-        // Appeler la fonction onChanged avec la valeur convertie
-        onChanged(intValue);
-      },
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(color: Colors.black),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: Colors.black),
-        ),
-      ),
-    );
-  }
-}
+//___________________________GESTION_ACTIVITES____________________________________//
 
 
 class SecuriteActivitesPhysiques extends StatefulWidget {
