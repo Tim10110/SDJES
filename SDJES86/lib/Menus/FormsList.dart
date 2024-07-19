@@ -174,41 +174,36 @@ class _DataState extends State<Data> {
       print('Permission denied');
       return;
     }
-    
-    final data = await rootBundle.load('assets/docx/template.docx');
-    final bytes = data.buffer.asUint8List();
-    final docx = await DocxTemplate.fromBytes(bytes);
     */
 
     List<objectbox.SansHModel> sansHList = objectBox.retrieveSansH();
+    final data = await rootBundle.load('assets/docx/final_docx.docx');
+    final bytes = data.buffer.asUint8List();
 
-    Content c = Content();
-    c
-      .add(TableContent("table", List.generate(sansHList.length, (i) {
-        InstanceMirror aMirror = reflector.reflect(sansHList[i]);
-        List<String> keys = aMirror.type.declarations.keys.toList();
-        keys.remove(aMirror.type.simpleName);
-        List<String> values = List.generate(keys.length, (i) => (aMirror.invokeGetter(keys[i])).toString());
-        final RowContent row = RowContent();
-        for(int i = 0; i < keys.length; i++) {
-          row.add(TextContent(keys[i], values[i]));
-        }
-        return row;
-      })));
-    
-    /*
-    final d = await docx.generate(c);
-    Directory directory = Directory('/storage/emulated/0/Download');
-    await Directory(directory.path).create(recursive: true);
-    final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
-    final of = File(filepath);
-    of.createSync();
-    print(of.existsSync());
-    if (d != null) {
-      await of.writeAsBytes(d);
-      print('Document ${of.path} generated! and ${of.existsSync()} exists');
+    for(int i = 0; i < sansHList.length; i++) {
+      final docx = await DocxTemplate.fromBytes(bytes);
+      Content c = Content();
+      
+      InstanceMirror aMirror = reflector.reflect(sansHList[i]);
+      List<String> keys = aMirror.type.declarations.keys.toList();
+      keys.remove(aMirror.type.simpleName);
+      List<String> values = List.generate(keys.length, (i) => (aMirror.invokeGetter(keys[i])).toString());
+      for(int x = 0; x < keys.length; x++) {
+        c.add(TextContent(keys[x], /*values[x]*/Random().nextDouble() * 1000000));
+      }
+      
+      final d = await docx.generate(c);
+      Directory directory = Directory('C:/Users/joecl/OneDrive/Documents/test'); //Directory('/storage/emulated/0/Download');
+      await Directory(directory.path).create(recursive: true);
+      final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
+      final of = File(filepath);
+      of.createSync();
+      print(of.existsSync());
+      if (d != null) {
+        await of.writeAsBytes(d);
+        print('Document ${of.path} generated! and ${of.existsSync()} exists');
+      }
     }
-    */
   }
 
   @override
