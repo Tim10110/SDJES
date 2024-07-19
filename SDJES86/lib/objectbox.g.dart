@@ -912,6 +912,64 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(2, 4055810680109453124),
+      name: 'ActiviteData',
+      lastPropertyId: const obx_int.IdUid(7, 4547862414286075582),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7571329898807614220),
+            name: 'activiteSHId',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 17746721392080898),
+            name: 'nomActivite',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 522917021902651044),
+            name: 'categorie',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1685854192521640283),
+            name: 'typeActivite',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2445636371955004835),
+            name: 'encadrantNomPrenom',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6144219270937496809),
+            name: 'encadrantQualif',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4547862414286075582),
+            name: 'numCartePro',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(3, 359253027851998056),
+      name: 'ActiviteDataList',
+      lastPropertyId: const obx_int.IdUid(1, 817509083813015904),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 817509083813015904),
+            name: 'activiteSHListId',
+            type: 6,
+            flags: 1)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -950,7 +1008,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(1, 7230219140994926528),
+      lastEntityId: const obx_int.IdUid(3, 359253027851998056),
       lastIndexId: const obx_int.IdUid(0, 0),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -1920,6 +1978,87 @@ obx_int.ModelDefinition getObjectBoxModel() {
                 .vTableGet(buffer, rootOffset, 356, []);
 
           return object;
+        }),
+    ActiviteData: obx_int.EntityDefinition<ActiviteData>(
+        model: _entities[1],
+        toOneRelations: (ActiviteData object) => [],
+        toManyRelations: (ActiviteData object) => {},
+        getId: (ActiviteData object) => object.activiteSHId,
+        setId: (ActiviteData object, int id) {
+          object.activiteSHId = id;
+        },
+        objectToFB: (ActiviteData object, fb.Builder fbb) {
+          final nomActiviteOffset = fbb.writeString(object.nomActivite);
+          final typeActiviteOffset = fbb.writeList(
+              object.typeActivite.map(fbb.writeString).toList(growable: false));
+          final encadrantNomPrenomOffset = object.encadrantNomPrenom == null
+              ? null
+              : fbb.writeString(object.encadrantNomPrenom!);
+          final encadrantQualifOffset = object.encadrantQualif == null
+              ? null
+              : fbb.writeString(object.encadrantQualif!);
+          final numCarteProOffset = object.numCartePro == null
+              ? null
+              : fbb.writeString(object.numCartePro!);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.activiteSHId);
+          fbb.addOffset(1, nomActiviteOffset);
+          fbb.addInt64(2, object.categorie);
+          fbb.addOffset(3, typeActiviteOffset);
+          fbb.addOffset(4, encadrantNomPrenomOffset);
+          fbb.addOffset(5, encadrantQualifOffset);
+          fbb.addOffset(6, numCarteProOffset);
+          fbb.finish(fbb.endTable());
+          return object.activiteSHId;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ActiviteData()
+            ..activiteSHId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..nomActivite = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 6, '')
+            ..categorie =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)
+            ..typeActivite = const fb.ListReader<String>(
+                    fb.StringReader(asciiOptimization: true),
+                    lazy: false)
+                .vTableGet(buffer, rootOffset, 10, [])
+            ..encadrantNomPrenom =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGetNullable(buffer, rootOffset, 12)
+            ..encadrantQualif = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 14)
+            ..numCartePro = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 16);
+
+          return object;
+        }),
+    ActiviteDataList: obx_int.EntityDefinition<ActiviteDataList>(
+        model: _entities[2],
+        toOneRelations: (ActiviteDataList object) => [],
+        toManyRelations: (ActiviteDataList object) => {},
+        getId: (ActiviteDataList object) => object.activiteSHListId,
+        setId: (ActiviteDataList object, int id) {
+          object.activiteSHListId = id;
+        },
+        objectToFB: (ActiviteDataList object, fb.Builder fbb) {
+          fbb.startTable(2);
+          fbb.addInt64(0, object.activiteSHListId);
+          fbb.finish(fbb.endTable());
+          return object.activiteSHListId;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ActiviteDataList()
+            ..activiteSHListId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -2635,4 +2774,42 @@ class SansHModel_ {
   /// See [SansHModel.signatureAuthoriteJSON].
   static final signatureAuthoriteJSON =
       obx.QueryStringVectorProperty<SansHModel>(_entities[0].properties[176]);
+}
+
+/// [ActiviteData] entity fields to define ObjectBox queries.
+class ActiviteData_ {
+  /// See [ActiviteData.activiteSHId].
+  static final activiteSHId =
+      obx.QueryIntegerProperty<ActiviteData>(_entities[1].properties[0]);
+
+  /// See [ActiviteData.nomActivite].
+  static final nomActivite =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[1]);
+
+  /// See [ActiviteData.categorie].
+  static final categorie =
+      obx.QueryIntegerProperty<ActiviteData>(_entities[1].properties[2]);
+
+  /// See [ActiviteData.typeActivite].
+  static final typeActivite =
+      obx.QueryStringVectorProperty<ActiviteData>(_entities[1].properties[3]);
+
+  /// See [ActiviteData.encadrantNomPrenom].
+  static final encadrantNomPrenom =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[4]);
+
+  /// See [ActiviteData.encadrantQualif].
+  static final encadrantQualif =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[5]);
+
+  /// See [ActiviteData.numCartePro].
+  static final numCartePro =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[6]);
+}
+
+/// [ActiviteDataList] entity fields to define ObjectBox queries.
+class ActiviteDataList_ {
+  /// See [ActiviteDataList.activiteSHListId].
+  static final activiteSHListId =
+      obx.QueryIntegerProperty<ActiviteDataList>(_entities[2].properties[0]);
 }

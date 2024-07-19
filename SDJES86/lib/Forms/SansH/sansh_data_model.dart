@@ -2,10 +2,12 @@
 
 import 'dart:convert';
 import 'dart:core';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Forms/SansH.dart';
 import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
 import 'package:flutter_application_2/objectbox/controller.dart';
+import 'package:flutter_application_2/objectbox_core.dart';
 import 'package:signature/signature.dart';
 
 class SansHModel extends objectbox.SansHModel {
@@ -23,8 +25,10 @@ class SansHModel extends objectbox.SansHModel {
   String qualifgratuit = ''; 
   String numeroCartePro = ''; 
   String copyToTest = '';
-  List<ActiviteData>? activitesSecu;
+  List<ActiviteData> activitesSecu = [];
+  final prescriptionAuthoritySignatureController = SignatureController();
   List<Point> signatureAuthorite = [];
+  Uint8List signatureBytes = Uint8List.fromList([]);
 
   String pointToJSON(Point p) {
     return jsonEncode({

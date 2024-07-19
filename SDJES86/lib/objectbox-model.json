@@ -896,9 +896,67 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:4055810680109453124",
+      "lastPropertyId": "7:4547862414286075582",
+      "name": "ActiviteData",
+      "properties": [
+        {
+          "id": "1:7571329898807614220",
+          "name": "activiteSHId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:17746721392080898",
+          "name": "nomActivite",
+          "type": 9
+        },
+        {
+          "id": "3:522917021902651044",
+          "name": "categorie",
+          "type": 6
+        },
+        {
+          "id": "4:1685854192521640283",
+          "name": "typeActivite",
+          "type": 30
+        },
+        {
+          "id": "5:2445636371955004835",
+          "name": "encadrantNomPrenom",
+          "type": 9
+        },
+        {
+          "id": "6:6144219270937496809",
+          "name": "encadrantQualif",
+          "type": 9
+        },
+        {
+          "id": "7:4547862414286075582",
+          "name": "numCartePro",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:359253027851998056",
+      "lastPropertyId": "1:817509083813015904",
+      "name": "ActiviteDataList",
+      "properties": [
+        {
+          "id": "1:817509083813015904",
+          "name": "activiteSHListId",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:7230219140994926528",
+  "lastEntityId": "3:359253027851998056",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

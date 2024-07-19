@@ -223,3 +223,25 @@ class SansHModel {
   List<String> copyTo = [];
   List<String> signatureAuthoriteJSON = [];
 }
+
+@reflector
+@Entity()
+class ActiviteData {
+  @Id()
+  int activiteSHId = 0;
+
+  String nomActivite = '';
+  int categorie = 1; 
+  List<String> typeActivite = []; // Type d'activité pour la catégorie 1
+  String? encadrantNomPrenom; // Nom/prenom de l'encadrant pour catégorie 2 et 3
+  String? encadrantQualif; // Qualification de l'encadrant pour catégorie 2 et 3
+  String? numCartePro; // Numero de la carte professionnelle pour catégorie 3
+}
+
+@Entity()
+class ActiviteDataList {
+  @Id()
+  int activiteSHListId = 0;
+
+  List<ActiviteData> activities = [];
+}

@@ -1,25 +1,19 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Forms/SansH/sansh_data.dart';
 import 'package:flutter_application_2/Forms/SansH/sansh_data_model.dart';
 import 'package:flutter_application_2/Menus/FormsList.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:flutter_application_2/objectbox/controller.dart';
+import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
 import 'package:intl/intl.dart';
 import 'package:signature/signature.dart';
 import 'dart:async';
 import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-class ActiviteData {
-  String nomActivite = '';
-  int categorie = 1; 
-  List<String> typeActivite = []; // Type d'activité pour la catégorie 1
-  String? encadrantNomPrenom; // Nom/prenom de l'encadrant pour catégorie 2 et 3
-  String? encadrantQualif; // Qualification de l'encadrant pour catégorie 2 et 3
-  String? numCartePro; // Numero de la carte professionnelle pour catégorie 3
-}
 
 class SansH extends StatefulWidget {
   const SansH({super.key});
@@ -173,6 +167,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
               heroTag: null,
               onPressed: () {
                 print(" inserting data .. ");
+                handleSignature();
                 insert();
               // Insert les data dans la db et revenir au menu data
               },
@@ -224,11 +219,17 @@ class _FirstPageSHState extends State<FirstPageSH> {
     );
   }
 
+  void handleSignature() async {
+    widget.sansHData.signatureAuthorite = widget.sansHData.prescriptionAuthoritySignatureController.points;
+    widget.sansHData.signatureBytes = await widget.sansHData.prescriptionAuthoritySignatureController.toPngBytes() ?? Uint8List.fromList([]);
+  }
 
   void insert() async {
-
     int id = await widget.sansHData.insertToDB();
-    print(id);
+    final activiteDataList = objectbox.ActiviteDataList();
+    activiteDataList.activities = [...widget.sansHData.activitesSecu];
+    await objectBox.storeActivite(activiteDataList);
+    
     /*
     Map<String, dynamic> row = {
 
@@ -3190,7 +3191,7 @@ class _TenthSectionState extends State<TenthSection> {
   final _prescriptionsEcheancesController = TextEditingController();
   final _nameOfControllerController = TextEditingController();
   final _prescriptionDateController = TextEditingController();
-  final _prescriptionAuthoritySignatureController = SignatureController();
+  
 
   @override
   void initState() {
@@ -3199,7 +3200,7 @@ class _TenthSectionState extends State<TenthSection> {
       _prescriptionsEcheancesController.text = widget.sansHData.prescriptionsEcheances;
       _nameOfControllerController.text = widget.sansHData.controllerName;
       _prescriptionDateController.text = widget.sansHData.dateDuControle.toString();
-      _prescriptionAuthoritySignatureController.points = widget.sansHData.signatureAuthorite;
+      widget.sansHData.prescriptionAuthoritySignatureController.points = widget.sansHData.signatureAuthorite;
   }
 
   @override
@@ -3208,7 +3209,7 @@ class _TenthSectionState extends State<TenthSection> {
     _prescriptionsEcheancesController.dispose();
     _nameOfControllerController.dispose();
     _prescriptionDateController.dispose();
-    _prescriptionAuthoritySignatureController.dispose();
+    widget.sansHData.prescriptionAuthoritySignatureController.dispose();
     
     super.dispose();
   }
@@ -3272,7 +3273,7 @@ class _TenthSectionState extends State<TenthSection> {
             },
           ),
           const SizedBox(height: 20),
-          //CustomTextField(labelText: 'Signature de l\'autorité', controller: _prescriptionAuthoritySignatureController),
+          //CustomTextField(labelText: 'Signature de l\'autorité', controller: widget.sansHData.prescriptionAuthoritySignatureController),
           const Text(
             'Signature de l\'autorité',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -3290,7 +3291,7 @@ class _TenthSectionState extends State<TenthSection> {
               children: [
                 Expanded(
                   child: Signature(
-                    controller: _prescriptionAuthoritySignatureController,
+                    controller: widget.sansHData.prescriptionAuthoritySignatureController,
                     backgroundColor: Colors.white,
                     // Ajoutez d'autres propriétés selon vos besoins
                   ),
@@ -3299,7 +3300,7 @@ class _TenthSectionState extends State<TenthSection> {
                 FloatingActionButton(
                   heroTag: null,
                   onPressed: () {
-                    _prescriptionAuthoritySignatureController.clear();
+                    widget.sansHData.prescriptionAuthoritySignatureController.clear();
                     widget.sansHData.signatureAuthorite = [];
                     widget.sansHData.signatureAuthoriteJSON = [];
                   },
@@ -3659,14 +3660,10 @@ class SecuriteActivitesPhysiques extends StatefulWidget {
 }
 
 class _SecuriteActivitesPhysiquesState extends State<SecuriteActivitesPhysiques> {
-  List<ActiviteData> activites = []; // Liste des activités
 
   @override
   void initState() {
     super.initState();
-    if (widget.sansHData.activitesSecu != null) {
-      activites = widget.sansHData.activitesSecu!; // Si des activités existent déjà, les charger
-    }
   }
 
   @override
@@ -3686,18 +3683,18 @@ class _SecuriteActivitesPhysiquesState extends State<SecuriteActivitesPhysiques>
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: activites.length,
+                itemCount: widget.sansHData.activitesSecu.length,
                 itemBuilder: (context, index) {
                   return ActiviteItem(
-                    activiteData: activites[index],
+                    activiteData: widget.sansHData.activitesSecu[index],
                     onDelete: () {
                       setState(() {
-                        activites.removeAt(index);
+                        widget.sansHData.activitesSecu.removeAt(index);
                       });
                     },
                     onUpdate: (updatedActivite) {
                       setState(() {
-                        activites[index] = updatedActivite;
+                        widget.sansHData.activitesSecu[index] = updatedActivite;
                       });
                     },
                   );
@@ -3707,7 +3704,7 @@ class _SecuriteActivitesPhysiquesState extends State<SecuriteActivitesPhysiques>
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    activites.add(ActiviteData()); // Ajouter une nouvelle activité
+                    widget.sansHData.activitesSecu.add(objectbox.ActiviteData()); // Ajouter une nouvelle activité
                   });
                 },
                 child: const Text('Ajouter une activité'),
@@ -3722,15 +3719,14 @@ class _SecuriteActivitesPhysiquesState extends State<SecuriteActivitesPhysiques>
 
   @override
   void dispose() {
-    widget.sansHData.activitesSecu = activites; // Sauvegarder les activités
     super.dispose();
   }
 }
 
 class ActiviteItem extends StatelessWidget {
-  final ActiviteData activiteData;
+  final objectbox.ActiviteData activiteData;
   final Function onDelete;
-  final Function(ActiviteData) onUpdate;
+  final Function(objectbox.ActiviteData) onUpdate;
 
   const ActiviteItem({super.key, 
     required this.activiteData,
