@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 7230219140994926528),
       name: 'SansHModel',
-      lastPropertyId: const obx_int.IdUid(177, 1021780385987541723),
+      lastPropertyId: const obx_int.IdUid(189, 1536738025429283539),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -909,6 +909,66 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(177, 1021780385987541723),
             name: 'signatureAuthoriteJSON',
             type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(178, 7275550294760569373),
+            name: 'totalDeclares',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(179, 3168920267779324874),
+            name: 'totalPresents',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(180, 2100707990709475481),
+            name: 'totalHandi',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(181, 605956329298023204),
+            name: 'totalAnim',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(182, 3493141175088671921),
+            name: 'totalAnimRequis',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(183, 962526986438301680),
+            name: 'observationsTempsDePrep',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(184, 5017193479325265663),
+            name: 'radioUtilisationMinibus',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(185, 2556906633840225910),
+            name: 'radioTransportsCommuns',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(186, 3055967972914229799),
+            name: 'radioCarnetsRoute',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(187, 266781623747953957),
+            name: 'radioConnaissanceSecurite',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(188, 1600000989809565342),
+            name: 'radioQualiteConduite',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(189, 1536738025429283539),
+            name: 'radioConditionsTravail',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -1269,7 +1329,26 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .signatureAuthoriteJSON
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(178);
+          final totalDeclaresOffset = fbb.writeString(object.totalDeclares);
+          final totalPresentsOffset = fbb.writeString(object.totalPresents);
+          final totalHandiOffset = fbb.writeString(object.totalHandi);
+          final totalAnimOffset = fbb.writeString(object.totalAnim);
+          final totalAnimRequisOffset = fbb.writeString(object.totalAnimRequis);
+          final observationsTempsDePrepOffset =
+              fbb.writeString(object.observationsTempsDePrep);
+          final radioUtilisationMinibusOffset =
+              fbb.writeString(object.radioUtilisationMinibus);
+          final radioTransportsCommunsOffset =
+              fbb.writeString(object.radioTransportsCommuns);
+          final radioCarnetsRouteOffset =
+              fbb.writeString(object.radioCarnetsRoute);
+          final radioConnaissanceSecuriteOffset =
+              fbb.writeString(object.radioConnaissanceSecurite);
+          final radioQualiteConduiteOffset =
+              fbb.writeString(object.radioQualiteConduite);
+          final radioConditionsTravailOffset =
+              fbb.writeString(object.radioConditionsTravail);
+          fbb.startTable(190);
           fbb.addInt64(0, object.formSHId);
           fbb.addOffset(1, visiteRealiseeParOffset);
           fbb.addOffset(2, enPresenceDeOffset);
@@ -1447,6 +1526,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(174, object.dateEndDerogation.millisecondsSinceEpoch);
           fbb.addOffset(175, copyToOffset);
           fbb.addOffset(176, signatureAuthoriteJSONOffset);
+          fbb.addOffset(177, totalDeclaresOffset);
+          fbb.addOffset(178, totalPresentsOffset);
+          fbb.addOffset(179, totalHandiOffset);
+          fbb.addOffset(180, totalAnimOffset);
+          fbb.addOffset(181, totalAnimRequisOffset);
+          fbb.addOffset(182, observationsTempsDePrepOffset);
+          fbb.addOffset(183, radioUtilisationMinibusOffset);
+          fbb.addOffset(184, radioTransportsCommunsOffset);
+          fbb.addOffset(185, radioCarnetsRouteOffset);
+          fbb.addOffset(186, radioConnaissanceSecuriteOffset);
+          fbb.addOffset(187, radioQualiteConduiteOffset);
+          fbb.addOffset(188, radioConditionsTravailOffset);
           fbb.finish(fbb.endTable());
           return object.formSHId;
         },
@@ -1917,7 +2008,37 @@ obx_int.ModelDefinition getObjectBoxModel() {
             ..signatureAuthoriteJSON = const fb.ListReader<String>(
                     fb.StringReader(asciiOptimization: true),
                     lazy: false)
-                .vTableGet(buffer, rootOffset, 356, []);
+                .vTableGet(buffer, rootOffset, 356, [])
+            ..totalDeclares = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 358, '')
+            ..totalPresents = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 360, '')
+            ..totalHandi = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 362, '')
+            ..totalAnim = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 364, '')
+            ..totalAnimRequis = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 366, '')
+            ..observationsTempsDePrep =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 368, '')
+            ..radioUtilisationMinibus =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 370, '')
+            ..radioTransportsCommuns =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 372, '')
+            ..radioCarnetsRoute = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 374, '')
+            ..radioConnaissanceSecurite =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 376, '')
+            ..radioQualiteConduite =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 378, '')
+            ..radioConditionsTravail =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 380, '');
 
           return object;
         })
@@ -2635,4 +2756,52 @@ class SansHModel_ {
   /// See [SansHModel.signatureAuthoriteJSON].
   static final signatureAuthoriteJSON =
       obx.QueryStringVectorProperty<SansHModel>(_entities[0].properties[176]);
+
+  /// See [SansHModel.totalDeclares].
+  static final totalDeclares =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[177]);
+
+  /// See [SansHModel.totalPresents].
+  static final totalPresents =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[178]);
+
+  /// See [SansHModel.totalHandi].
+  static final totalHandi =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[179]);
+
+  /// See [SansHModel.totalAnim].
+  static final totalAnim =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[180]);
+
+  /// See [SansHModel.totalAnimRequis].
+  static final totalAnimRequis =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[181]);
+
+  /// See [SansHModel.observationsTempsDePrep].
+  static final observationsTempsDePrep =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[182]);
+
+  /// See [SansHModel.radioUtilisationMinibus].
+  static final radioUtilisationMinibus =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[183]);
+
+  /// See [SansHModel.radioTransportsCommuns].
+  static final radioTransportsCommuns =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[184]);
+
+  /// See [SansHModel.radioCarnetsRoute].
+  static final radioCarnetsRoute =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[185]);
+
+  /// See [SansHModel.radioConnaissanceSecurite].
+  static final radioConnaissanceSecurite =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[186]);
+
+  /// See [SansHModel.radioQualiteConduite].
+  static final radioQualiteConduite =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[187]);
+
+  /// See [SansHModel.radioConditionsTravail].
+  static final radioConditionsTravail =
+      obx.QueryStringProperty<SansHModel>(_entities[0].properties[188]);
 }

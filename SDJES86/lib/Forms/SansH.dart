@@ -15,8 +15,11 @@ class ActiviteData {
   String nomActivite = '';
   int categorie = 1; 
   List<String> typeActivite = []; // Type d'activité pour la catégorie 1
-  String? encadrantNomPrenom; // Nom/prenom de l'encadrant pour catégorie 2 et 3
-  String? encadrantQualif; // Qualification de l'encadrant pour catégorie 2 et 3
+  String? denominationPrestataire;
+  String? encadrantNomPrenom2; // Nom/prenom de l'encadrant pour catégorie 2
+  String? encadrantQualif2;
+  String? encadrantNomPrenom3; // Nom/prenom de l'encadrant pour catégorie 3
+  String? encadrantQualif3; 
   String? numCartePro; // Numero de la carte professionnelle pour catégorie 3
 }
 
@@ -3422,9 +3425,9 @@ class ActiviteItem extends StatelessWidget {
               TextFormField(
                 decoration:
                     const InputDecoration(labelText: 'Nom/prenom de l\'encadrant'),
-                initialValue: activiteData.encadrantNomPrenom ?? '',
+                initialValue: activiteData.encadrantNomPrenom2 ?? '',
                 onChanged: (value) {
-                  activiteData.encadrantNomPrenom = value;
+                  activiteData.encadrantNomPrenom2 = value;
                   onUpdate(activiteData);
                 },
               ),
@@ -3433,9 +3436,9 @@ class ActiviteItem extends StatelessWidget {
                 decoration: const InputDecoration(
                     labelText:
                         'Qualification permettant l’encadrement de l’activité'),
-                initialValue: activiteData.encadrantQualif ?? '',
+                initialValue: activiteData.encadrantQualif2 ?? '',
                 onChanged: (value) {
-                  activiteData.encadrantQualif = value;
+                  activiteData.encadrantQualif2 = value;
                   onUpdate(activiteData);
                 },
               ),
@@ -3446,17 +3449,25 @@ class ActiviteItem extends StatelessWidget {
               const Text('Dans le cas où il s’agit d’une activité figurant en annexe de l’arrêté de 2012 ou d’une activité sportive : ',style: TextStyle(fontWeight: FontWeight.bold),),
               const Text('NB :\n'
                    '* une activité figurant en annexe de l’arrêté de 2012 ou une activité sportive doit être encadrée par un animateur ou intervenant disposant d’une qualification idoine.\n'
-                   '* une simple activité physique peut être encadrée par tout animateur titulaire.',style: TextStyle(fontWeight: FontWeight.normal),),
+                   '* une simple activité physique peut être encadrée par tout animateur titulaire.',style: TextStyle(fontWeight: FontWeight.bold),),
               const SizedBox(height: 20),
               const Text('Si l’activité est organisée via une prestation (à titre onéreux ou gratuit)',style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline,)),
-              const Text('Dénomination de l’établissement d’activité physique ou sportive réalisant la prestation:',style: TextStyle(fontWeight: FontWeight.bold)),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Dénomination de l’établissement d’activité physique ou sportive réalisant la prestation:'),
+                initialValue: activiteData.denominationPrestataire ?? '',
+                onChanged: (value) {
+                  activiteData.denominationPrestataire = value;
+                  onUpdate(activiteData);
+                },
+              ),
               const SizedBox(height: 10),
               TextFormField(
                 decoration:
                     const InputDecoration(labelText: 'Nom/prenom de l\'encadrant'),
-                initialValue: activiteData.encadrantNomPrenom ?? '',
+                initialValue: activiteData.encadrantNomPrenom3 ?? '',
                 onChanged: (value) {
-                  activiteData.encadrantNomPrenom = value;
+                  activiteData.encadrantNomPrenom3 = value;
                   onUpdate(activiteData);
                 },
               ),
@@ -3465,9 +3476,9 @@ class ActiviteItem extends StatelessWidget {
                 decoration: const InputDecoration(
                     labelText:
                         'Qualification permettant l’encadrement de l’activité:'),
-                initialValue: activiteData.encadrantQualif ?? '',
+                initialValue: activiteData.encadrantQualif3 ?? '',
                 onChanged: (value) {
-                  activiteData.encadrantQualif = value;
+                  activiteData.encadrantQualif3 = value;
                   onUpdate(activiteData);
                 },
               ),

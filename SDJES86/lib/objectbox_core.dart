@@ -28,12 +28,15 @@ class SansHModel {
   String moinsDe6AnsDeclares = '';
   String entre6et13AnsDeclares = '';
   String entre14et17AnsDeclares = '';
+  String totalDeclares = '';
   String moinsDe6AnsPresents = '';
   String entre6et13AnsPresents = '';
   String entre14et17AnsPresents = '';
+  String totalPresents = '';
   String moinsDe6AnsHandi = '';
   String entre6et13AnsHandi = '';
   String entre14et17AnsHandi = '';
+  String totalHandi = '';
   String radio2324_13 = '';
   String radio2324_14  = '';
   String observations2324_13 = '';
@@ -48,8 +51,10 @@ class SansHModel {
   String nombreAnimQualif = ''; 
   String nombreAnimStagiaires = ''; 
   String nombreAnimNonQualif = '';
+  String totalAnim = '';
   String encadrementRequisMoinsDe6 = '';
   String encadrementRequisPlusDe6 = '';
+  String totalAnimRequis = '';
   
   String radio227_2 = '';
   String observations227_2 = '';
@@ -62,6 +67,7 @@ class SansHModel {
   String observationsCommunicationOrganisateur = ''; 
   String observationsSavoirComportement = '';
   String observationsQualifPersonnel = ''; 
+  String observationsTempsDePrep = '';
   String observationsReuBilan = ''; 
   String observationsEvalStg = ''; 
  
