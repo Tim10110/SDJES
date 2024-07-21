@@ -1,15 +1,17 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Forms/SansH/sansh_data.dart';
-import 'package:flutter_application_2/Forms/SansH/sansh_data_model.dart';
+import 'package:flutter_application_2/Forms/SansH/sansh_draft_model.dart';
 import 'package:flutter_application_2/Menus/FormsList.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:flutter_application_2/components/my_textfields.dart';
 import 'package:flutter_application_2/objectbox/controller.dart';
 import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
+import 'package:flutter_application_2/objectbox_core.dart';
 import 'package:intl/intl.dart';
 import 'package:signature/signature.dart';
 import 'dart:async';
@@ -17,34 +19,49 @@ import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class SansH extends StatefulWidget {
-  const SansH({super.key});
+  final objectbox.SansHModel sansHData;
+  const SansH({super.key, required this.sansHData});
 
   @override
   _SansHState createState() => _SansHState();
 }
 
 class _SansHState extends State<SansH> {
-  final SansHModel _sansHData = SansHModel();
+  late objectbox.SansHModel _sansHData;
+  final SansHDraftModel _sansHDraft = SansHDraftModel();
 
+  @override
+  void initState() {
+    super.initState();
+    _sansHData = widget.sansHData;
+    initializeDraft();
+  }
+
+  void initializeDraft() {
+    _sansHDraft.prescriptionAuthoritySignatureController.points = _sansHData.signatureAuthoriteJSON.map((e) {
+      Map map = jsonDecode(e);
+      return Point(
+        Offset(map['offset']['dx'], map['offset']['dy']),
+        map['type'] == 'tap' ? PointType.tap : PointType.move,
+        map['pressure']
+      );
+    }).toList();
+    _sansHDraft.activitesSecu = objectBox.retrieveActivite().where((e) => e.formSHID == _sansHData.formSHId).toList();
+  }
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Grille ICE ALSH',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FirstPageSH(sansHData: _sansHData), // Passer _sansHData à FirstPageSH
-    );
+    return FirstPageSH(sansHData: _sansHData, sansHDraft: _sansHDraft); // Passer _sansHData à FirstPageSH
   }
 }
 
 class MyFormContent {
   final List<String> sectionTitles;
 
-  SansHModel sansHData;
+  objectbox.SansHModel sansHData;
+  SansHDraftModel sansHDraft;
 
-  MyFormContent(this.sectionTitles, this.sansHData);
+  MyFormContent(this.sectionTitles, this.sansHData, this.sansHDraft);
 
   Widget buildFormContent(int currentStep) {
     // Vérifier si currentStep est dans la plage valide
@@ -82,17 +99,17 @@ class MyFormContent {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Affichage du contenu de la section correspondant à currentStep
-                if (currentStep == 0) FirstSection(sansHData),
-                if (currentStep == 1) SecondSection(sansHData),
-                if (currentStep == 2) ThirdSection(sansHData),
-                if (currentStep == 3) FourthSection(sansHData),
-                if (currentStep == 4) FifthSection(sansHData),
-                if (currentStep == 5) MiniBusSection(sansHData),
-                if (currentStep == 6) SixthSection(sansHData),
-                if (currentStep == 7) SeventhSection(sansHData),
-                if (currentStep == 8) EighthSection(sansHData),
-                if (currentStep == 9) NinthSection(sansHData),
-                if (currentStep == 10) TenthSection(sansHData),
+                if (currentStep == 0) FirstSection(sansHData, sansHDraft),
+                if (currentStep == 1) SecondSection(sansHData, sansHDraft),
+                if (currentStep == 2) ThirdSection(sansHData, sansHDraft),
+                if (currentStep == 3) FourthSection(sansHData, sansHDraft),
+                if (currentStep == 4) FifthSection(sansHData, sansHDraft),
+                if (currentStep == 5) MiniBusSection(sansHData, sansHDraft),
+                if (currentStep == 6) SixthSection(sansHData, sansHDraft),
+                if (currentStep == 7) SeventhSection(sansHData, sansHDraft),
+                if (currentStep == 8) EighthSection(sansHData, sansHDraft),
+                if (currentStep == 9) NinthSection(sansHData, sansHDraft),
+                if (currentStep == 10) TenthSection(sansHData, sansHDraft),
               ],
             ),
           ),
@@ -103,9 +120,10 @@ class MyFormContent {
 }
 
 class FirstPageSH extends StatefulWidget {
-  final SansHModel sansHData; 
+  final objectbox.SansHModel sansHData; 
+  final SansHDraftModel sansHDraft;
 
-  const FirstPageSH({super.key, required this.sansHData}); 
+  const FirstPageSH({super.key, required this.sansHData, required this.sansHDraft}); 
 
   @override
   State<FirstPageSH> createState() => _FirstPageSHState();
@@ -137,7 +155,7 @@ class _FirstPageSHState extends State<FirstPageSH> {
       ),
       body: SingleChildScrollView(
         //gérer le controller de scroll
-        child: MyFormContent(sectionTitles, widget.sansHData).buildFormContent(_currentStep),
+        child: MyFormContent(sectionTitles, widget.sansHData, widget.sansHDraft).buildFormContent(_currentStep),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -223,29 +241,35 @@ class _FirstPageSHState extends State<FirstPageSH> {
   }
 
   Future<void> handleSignature() async {
-    widget.sansHData.signatureAuthorite = widget.sansHData.prescriptionAuthoritySignatureController.points;
-    widget.sansHData.signature = Uint8List.fromList(await widget.sansHData.prescriptionAuthoritySignatureController.toPngBytes() ?? []);
-    widget.sansHData.signatureAuthoriteJSON = widget.sansHData.signatureAuthorite.map((e) => widget.sansHData.pointToJSON(e)).toList();
+    List<Point> points = widget.sansHDraft.prescriptionAuthoritySignatureController.points;
+    widget.sansHData.signature = Uint8List.fromList(await widget.sansHDraft.prescriptionAuthoritySignatureController.toPngBytes() ?? []);
+    widget.sansHData.signatureAuthoriteJSON = points.map((e) => widget.sansHDraft.pointToJSON(e)).toList();
+  }
+
+  Future<int> insertToDB() async {
+    int id = await objectBox.storeSansH(widget.sansHData);
+    print(id);
+    return id;
   }
 
   void insert() async {
-    final int id = await widget.sansHData.insertToDB();
-    for(int i = 0; i < widget.sansHData.activitesSecu.length; i++) {
-      widget.sansHData.activitesSecu[i].formSHID = id;
-      await objectBox.storeActivite(widget.sansHData.activitesSecu[i]);
+    final int id = await insertToDB();
+    for(int i = 0; i < widget.sansHDraft.activitesSecu.length; i++) {
+      widget.sansHDraft.activitesSecu[i].formSHID = id;
+      await objectBox.storeActivite(widget.sansHDraft.activitesSecu[i]);
     }
     /*
     final id = await DatabaseHelper().insertSH(row);
 
-    for (var compteur = 0; compteur <= widget.sansHData.activitesSecu!.length-1 ; compteur++){ // Boucle ajout DB des activités
+    for (var compteur = 0; compteur <= widget.sansHDraft.activitesSecu!.length-1 ; compteur++){ // Boucle ajout DB des activités
     Map<String, dynamic> rowactivite = {
       DatabaseHelper.formSHId: id,
-      DatabaseHelper.nomActivite: widget.sansHData.activitesSecu![compteur].nomActivite,
-      DatabaseHelper.categorie: widget.sansHData.activitesSecu![compteur].categorie,
-      DatabaseHelper.typeActivite: widget.sansHData.activitesSecu![compteur].typeActivite.join('|'),
-      DatabaseHelper.encadrantNomPrenom: widget.sansHData.activitesSecu![compteur].encadrantNomPrenom,
-      DatabaseHelper.encadrantQualif: widget.sansHData.activitesSecu![compteur].encadrantQualif,
-      DatabaseHelper.numCartePro: widget.sansHData.activitesSecu![compteur].numCartePro
+      DatabaseHelper.nomActivite: widget.sansHDraft.activitesSecu![compteur].nomActivite,
+      DatabaseHelper.categorie: widget.sansHDraft.activitesSecu![compteur].categorie,
+      DatabaseHelper.typeActivite: widget.sansHDraft.activitesSecu![compteur].typeActivite.join('|'),
+      DatabaseHelper.encadrantNomPrenom: widget.sansHDraft.activitesSecu![compteur].encadrantNomPrenom,
+      DatabaseHelper.encadrantQualif: widget.sansHDraft.activitesSecu![compteur].encadrantQualif,
+      DatabaseHelper.numCartePro: widget.sansHDraft.activitesSecu![compteur].numCartePro
     };
      try {
      print("Attempting to insert: $rowactivite");
@@ -264,8 +288,9 @@ class _FirstPageSHState extends State<FirstPageSH> {
 //___________________________SECTIONS______________________________________//
 
 class FirstSection extends StatefulWidget {
-  final SansHModel sansHData;
-  const FirstSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const FirstSection(this.sansHData, this.sansHDraft, {super.key});
 
   @override
   _FirstSectionState createState() => _FirstSectionState();
@@ -334,8 +359,9 @@ class _FirstSectionState extends State<FirstSection> {
 }
 
 class SecondSection extends StatefulWidget {
-  final SansHModel sansHData;
-  const SecondSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const SecondSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _SecondSectionState createState() => _SecondSectionState();
@@ -528,8 +554,9 @@ class _SecondSectionState extends State<SecondSection> {
 }
 
 class ThirdSection extends StatefulWidget {
-  final SansHModel sansHData;
-  const ThirdSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const ThirdSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _ThirdSectionState createState() => _ThirdSectionState();
@@ -905,9 +932,9 @@ class _ThirdSectionState extends State<ThirdSection> {
 } 
 
 class FourthSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const FourthSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const FourthSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _FourthSectionState createState() => _FourthSectionState();
@@ -1386,9 +1413,9 @@ class _FourthSectionState extends State<FourthSection> {
 }
 
 class FifthSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const FifthSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const FifthSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _FifthSectionState createState() => _FifthSectionState();
@@ -1902,7 +1929,7 @@ class _FifthSectionState extends State<FifthSection> {
         const SizedBox(height: 20),
         const Divider(),
         const SizedBox(height: 20),
-        SecuriteActivitesPhysiques(widget.sansHData),
+        SecuriteActivitesPhysiques(widget.sansHData, widget.sansHDraft),
         const SizedBox(height: 20),
         const Text(
           'Activités aquatiques (dans l’eau) et nautiques (sur l’eau)',
@@ -1950,9 +1977,9 @@ class _FifthSectionState extends State<FifthSection> {
 }
 
 class MiniBusSection extends StatefulWidget {
-  final SansHModel sansHData;
-
-  const MiniBusSection (this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const MiniBusSection(this.sansHData, this.sansHDraft, {super.key});
 
   @override
   _MiniBusSectionState createState() => _MiniBusSectionState();
@@ -2064,9 +2091,9 @@ class _MiniBusSectionState extends State<MiniBusSection > {
 
 
 class SixthSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const SixthSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const SixthSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _SixthSectionState createState() => _SixthSectionState();
@@ -2303,9 +2330,9 @@ class _SixthSectionState extends State<SixthSection> {
 }
 
 class SeventhSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const SeventhSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const SeventhSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _SeventhSectionState createState() => _SeventhSectionState();
@@ -2605,9 +2632,9 @@ class _SeventhSectionState extends State<SeventhSection> {
 }
 
 class EighthSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const EighthSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const EighthSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _EighthSectionState createState() => _EighthSectionState();
@@ -2799,9 +2826,9 @@ class _EighthSectionState extends State<EighthSection> {
 }
 
 class NinthSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const NinthSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const NinthSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _NinthSectionState createState() => _NinthSectionState();
@@ -3113,9 +3140,9 @@ class _NinthSectionState extends State<NinthSection> {
 }
 
 class TenthSection extends StatefulWidget {
-  final SansHModel sansHData;
-  
-  const TenthSection(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const TenthSection(this.sansHData, this.sansHDraft, {super.key});
   
   @override
   _TenthSectionState createState() => _TenthSectionState();
@@ -3137,7 +3164,6 @@ class _TenthSectionState extends State<TenthSection> {
       _prescriptionsEcheancesController.text = widget.sansHData.prescriptionsEcheances;
       _nameOfControllerController.text = widget.sansHData.controllerName;
       _prescriptionDateController.text = widget.sansHData.dateDuControle.toString();
-      widget.sansHData.prescriptionAuthoritySignatureController.points = widget.sansHData.signatureAuthorite;
   }
 
   @override
@@ -3146,7 +3172,7 @@ class _TenthSectionState extends State<TenthSection> {
     _prescriptionsEcheancesController.dispose();
     _nameOfControllerController.dispose();
     _prescriptionDateController.dispose();
-    widget.sansHData.prescriptionAuthoritySignatureController.dispose();
+    widget.sansHDraft.prescriptionAuthoritySignatureController.dispose();
     
     super.dispose();
   }
@@ -3228,7 +3254,7 @@ class _TenthSectionState extends State<TenthSection> {
               children: [
                 Expanded(
                   child: Signature(
-                    controller: widget.sansHData.prescriptionAuthoritySignatureController,
+                    controller: widget.sansHDraft.prescriptionAuthoritySignatureController,
                     backgroundColor: Colors.white,
                     // Ajoutez d'autres propriétés selon vos besoins
                   ),
@@ -3237,8 +3263,7 @@ class _TenthSectionState extends State<TenthSection> {
                 FloatingActionButton(
                   heroTag: null,
                   onPressed: () {
-                    widget.sansHData.prescriptionAuthoritySignatureController.clear();
-                    widget.sansHData.signatureAuthorite = [];
+                    widget.sansHDraft.prescriptionAuthoritySignatureController.clear();
                     widget.sansHData.signatureAuthoriteJSON = [];
                   },
                   child: const Icon(Icons.clear),
@@ -3256,9 +3281,9 @@ class _TenthSectionState extends State<TenthSection> {
 
 
 class SecuriteActivitesPhysiques extends StatefulWidget {
-  final SansHModel sansHData;
-
-  const SecuriteActivitesPhysiques(this.sansHData, {super.key});
+  final objectbox.SansHModel sansHData;
+  final SansHDraftModel sansHDraft;
+  const SecuriteActivitesPhysiques(this.sansHData, this.sansHDraft, {super.key});
 
   @override
   _SecuriteActivitesPhysiquesState createState() =>
@@ -3289,18 +3314,18 @@ class _SecuriteActivitesPhysiquesState extends State<SecuriteActivitesPhysiques>
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.sansHData.activitesSecu.length,
+                itemCount: widget.sansHDraft.activitesSecu.length,
                 itemBuilder: (context, index) {
                   return ActiviteItem(
-                    activiteData: widget.sansHData.activitesSecu[index],
+                    activiteData: widget.sansHDraft.activitesSecu[index],
                     onDelete: () {
                       setState(() {
-                        widget.sansHData.activitesSecu.removeAt(index);
+                        widget.sansHDraft.activitesSecu.removeAt(index);
                       });
                     },
                     onUpdate: (updatedActivite) {
                       setState(() {
-                        widget.sansHData.activitesSecu[index] = updatedActivite;
+                        widget.sansHDraft.activitesSecu[index] = updatedActivite;
                       });
                     },
                   );
@@ -3310,7 +3335,7 @@ class _SecuriteActivitesPhysiquesState extends State<SecuriteActivitesPhysiques>
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    widget.sansHData.activitesSecu.add(objectbox.ActiviteData()); // Ajouter une nouvelle activité
+                    widget.sansHDraft.activitesSecu.add(objectbox.ActiviteData()); // Ajouter une nouvelle activité
                   });
                 },
                 child: const Text('Ajouter une activité'),

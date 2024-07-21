@@ -8,7 +8,7 @@ import 'dart:core';
 @Entity()
 class SansHModel {
   @Id()
-  int formSHId = 0;
+  int formSHId = -1;
 
   //1ere section
   String visiteRealiseePar = '';

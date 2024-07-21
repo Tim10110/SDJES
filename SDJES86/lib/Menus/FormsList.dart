@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_2/Forms/SansH.dart';
 import 'package:flutter_application_2/main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:docx_template/docx_template.dart';
@@ -27,8 +28,8 @@ class _DataState extends State<Data> {
   List<Map<String, dynamic>> displaySH = [];
   List<Map<String, dynamic>> displayAH = [];
   List<Map<String, dynamic>> displayScout = [];
-
   List<objectbox.SansHModel> displaySHModel = [];
+  int selectedIndex = -1;
 
   @override
   void initState() {
@@ -162,62 +163,70 @@ class _DataState extends State<Data> {
   }
 
   void exportData() async {
-    /*
-    final PermissionStatus status;
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    if(androidInfo.version.sdkInt <= 32) {
-      status = await Permission.storage.request();
-    } else {
-      status = await Permission.manageExternalStorage.request();
-    }
-    if (!status.isGranted) {
-      print('Permission denied');
+    if(selectedIndex == -1) {
       return;
     }
-    */
 
-    List<objectbox.SansHModel> sansHList = objectBox.retrieveSansH();
+    objectbox.SansHModel sansHData = displaySHModel[selectedIndex];
+    // Action à effectuer lorsque le bouton Exporter est cliqué
+
     final data = await rootBundle.load('assets/docx/final_docx.docx');
     final bytes = data.buffer.asUint8List();
 
-    for(int i = 0; i < sansHList.length; i++) {
-      List<objectbox.ActiviteData> activiteData = (objectBox.retrieveActivite()).where((e) => e.formSHID == sansHList[i].formSHId).toList();
-      final docx = await DocxTemplate.fromBytes(bytes);
-      Content c = Content();
-      
-      InstanceMirror aMirror = reflector.reflect(sansHList[i]);
-      List<String> keys = aMirror.type.declarations.keys.toList();
-      keys.remove(aMirror.type.simpleName);
-      keys.remove('signatureAuthoriteJSON'); //We don't need this in Word file. This is only needed to store the signature data in JSON for modifying form
-      keys.remove('signature'); //We add this image to Word file separately
+    List<objectbox.ActiviteData> activiteData = (objectBox.retrieveActivite()).where((e) => e.formSHID == sansHData.formSHId).toList();
+    final docx = await DocxTemplate.fromBytes(bytes);
+    Content c = Content();
+    
+    InstanceMirror aMirror = reflector.reflect(sansHData);
+    List<String> keys = aMirror.type.declarations.keys.toList();
+    keys.remove(aMirror.type.simpleName);
+    keys.remove('signatureAuthoriteJSON'); //We don't need this in Word file. This is only needed to store the signature data in JSON for modifying form
+    keys.remove('signature'); //We add this image to Word file separately
 
-      List<String> values = List.generate(keys.length, (i) => aMirror.invokeGetter(keys[i]).toString());
+    List<String> values = List.generate(keys.length, (i) => aMirror.invokeGetter(keys[i]).toString());
+    for(int x = 0; x < keys.length; x++) {
+      c.add(TextContent(keys[x], values[x]));
+    }
+      
+    for(int j = 0; j < activiteData.length; j++) {
+      InstanceMirror bMirror = reflector.reflect(activiteData[j]);
+      List<String> keys = bMirror.type.declarations.keys.toList();
+      keys.remove(bMirror.type.simpleName);
+      List<String> values = List.generate(keys.length, (i) => (bMirror.invokeGetter(keys[i])).toString());
       for(int x = 0; x < keys.length; x++) {
-        c.add(TextContent(keys[x], values[x]));
-      }
-      
-      for(int j = 0; j < activiteData.length; j++) {
-        InstanceMirror bMirror = reflector.reflect(activiteData[j]);
-        List<String> keys = bMirror.type.declarations.keys.toList();
-        keys.remove(bMirror.type.simpleName);
-        List<String> values = List.generate(keys.length, (i) => (bMirror.invokeGetter(keys[i])).toString());
-        for(int x = 0; x < keys.length; x++) {
-          c.add(TextContent('${keys[x]}_$j', values[x].toString()));
-        }
-      }
-      c.add(ImageContent('signature', aMirror.invokeGetter('signature') as Uint8List));
-      
-      final d = await docx.generate(c);
-      Directory directory = Directory('C:/Users/joecl/OneDrive/Documents/test'); //Directory('/storage/emulated/0/Download');
-      await Directory(directory.path).create(recursive: true);
-      final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
-      final of = File(filepath);
-      of.createSync();
-      if (d != null) {
-        await of.writeAsBytes(d);
-        print('Document ${of.path} generated! and ${of.existsSync()} exists');
+        c.add(TextContent('${keys[x]}_$j', values[x].toString()));
       }
     }
+    c.add(ImageContent('signature', aMirror.invokeGetter('signature') as Uint8List));
+    
+    final d = await docx.generate(c);
+    Directory directory = Directory('C:/Users/joecl/OneDrive/Documents/test'); //Directory('/storage/emulated/0/Download');
+    await Directory(directory.path).create(recursive: true);
+    final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
+    final file = File(filepath);
+    file.createSync();
+    if (d != null) {
+      await file.writeAsBytes(d);
+      print('Document ${file.path} generated! and ${file.existsSync()} exists');
+      final _ = await sendWordFile(file);
+      deleteSansHData();
+    }
+  }
+
+  Future<void> sendWordFile(File file) async {
+    
+  } 
+
+  void deleteSansHData() {
+    if(selectedIndex == -1) {
+      return;
+    }
+    // Action à effectuer lorsque le bouton Supprimer est cliqué
+    objectBox.removeSansH(displaySHModel[selectedIndex].formSHId);
+    objectBox.removeActivite(displaySHModel[selectedIndex].formSHId);
+    displaySHModel.removeAt(selectedIndex);
+    selectedIndex = -1;
+    setState(() {});
   }
 
   @override
@@ -256,26 +265,22 @@ class _DataState extends State<Data> {
                 itemBuilder: (BuildContext context, int index) {
                   var item = displaySHModel[index];
                   return GestureDetector(
-                    onTap: () {
-                      //FormEditPage(idDB: idDB)
-                    /*  Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FormEditPage(avecHData: item),
-                        ),
-                      );*/
-                    },
+                    onTap: () => setState(() => selectedIndex = (selectedIndex == index ? -1 : selectedIndex)),
+                    onLongPress: () => setState(() => selectedIndex = (selectedIndex == index ? -1 : index)),
                     child: Card(
+                      shape: selectedIndex == index
+                      ? RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.blue, width: 2.0),
+                          borderRadius: BorderRadius.circular(4.0))
+                      : RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.transparent, width: 2.0),
+                          borderRadius: BorderRadius.circular(4.0)),
                       margin: const EdgeInsets.all(8.0),
                       child: ListTile(
                         title: Text('Item ${item.formSHId}'), // Adjust this according to your data structure
                         subtitle: Text(item.directeurNom), // Adjust this according to your data structure
-                        onTap: () {
-                          /*Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FormEditPage(idDB: item.formSHId)),
-                          );*/
-                        },
+                        onTap: () => setState(() => selectedIndex = (selectedIndex == index ? -1 : selectedIndex)),
+                        onLongPress: () => setState(() => selectedIndex = (selectedIndex == index ? -1 : index)),
                       ),
                     ),
                   );
@@ -381,6 +386,8 @@ class _DataState extends State<Data> {
                     ElevatedButton.icon(
                       onPressed: () {
                         // Action à effectuer lorsque le bouton Modifier est cliqué
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SansH(sansHData: displaySHModel[selectedIndex])));
+                        setState(() {});
                       },
                       icon: const Icon(Icons.edit),
                       label: const Text('Modifier'),
@@ -391,9 +398,7 @@ class _DataState extends State<Data> {
                     ),
                     SizedBox(width: 15),
                     ElevatedButton.icon(
-                      onPressed: () {
-                        // Action à effectuer lorsque le bouton Supprimer est cliqué
-                      },
+                      onPressed: deleteSansHData,
                       icon: const Icon(Icons.delete),
                       label: const Text('Supprimer'),
                       style: ElevatedButton.styleFrom(
@@ -403,10 +408,7 @@ class _DataState extends State<Data> {
                     ),
                     SizedBox(width: 15),
                     ElevatedButton.icon(
-                      onPressed: () {
-                        // Action à effectuer lorsque le bouton Exporter est cliqué
-                        exportData();
-                      },
+                      onPressed: exportData,
                       icon: const Icon(Icons.send),
                       label: const Text('Exporter'),
                       style: ElevatedButton.styleFrom(

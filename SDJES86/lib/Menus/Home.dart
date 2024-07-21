@@ -6,6 +6,7 @@ import 'package:flutter_application_2/Forms/AvecH.dart';
 import 'package:flutter_application_2/Menus/FormsList.dart';
 import 'package:flutter_application_2/Forms/SansH.dart';
 import 'package:flutter_application_2/Forms/Scout.dart';
+import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
 
 class Home extends StatelessWidget {
 
@@ -48,7 +49,7 @@ class Home extends StatelessWidget {
                     ),
                     items: [
                       buildCarouselItem(context, 'assets/Form.png', 'Nouveau Formulaire Sans hébergement', () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SansH()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SansH(sansHData: objectbox.SansHModel())));
                       }),
                       buildCarouselItem(context, 'assets/AvecH.png', 'Nouveau Formulaire Avec Hébergement', () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const AvecH()));

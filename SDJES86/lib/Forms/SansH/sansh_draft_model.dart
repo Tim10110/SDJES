@@ -10,18 +10,9 @@ import 'package:flutter_application_2/objectbox/controller.dart';
 import 'package:flutter_application_2/objectbox_core.dart';
 import 'package:signature/signature.dart';
 
-class SansHModel extends objectbox.SansHModel {
-  String radioEtape1 = ''; 
-  String radioEape2 = ''; 
-  String nomPrenomEncadrantACM = ''; 
-  String qualifACM = ''; 
-  String nomPrenomEncadrantGratuit = '';
-  String qualifgratuit = ''; 
-  String numeroCartePro = ''; 
-  String copyToTest = '';
+class SansHDraftModel {
   List<ActiviteData> activitesSecu = [];
   final prescriptionAuthoritySignatureController = SignatureController();
-  List<Point> signatureAuthorite = [];
 
   String pointToJSON(Point p) {
     return jsonEncode({
@@ -36,11 +27,5 @@ class SansHModel extends objectbox.SansHModel {
       'dx': o.dx,
       'dy': o.dy
     };
-  }
-
-  Future<int> insertToDB() async {
-    int id = await objectBox.storeSansH(this);
-    print(id);
-    return id;
   }
 }

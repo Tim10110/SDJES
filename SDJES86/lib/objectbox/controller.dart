@@ -46,8 +46,13 @@ class ObjectBox {
   }
 
   void removeActivite(int id) {
-    final draftsBox = sansHStore.box<objectbox.ActiviteData>();
-    draftsBox.remove(id);
+    final draftsBox = sansHStore.box<objectbox.SansHModel>();
+    final activiteData = retrieveActivite();
+    List activiteIDList = activiteData.where((e) => e.formSHID == id).map((e) => e.activiteSHId).toList();
+    for(int i = 0; i < activiteIDList.length; i++) {
+      print(activiteIDList[i]);
+      draftsBox.remove(activiteIDList[i]);
+    }
   }
 
   void emptyActivite() {
