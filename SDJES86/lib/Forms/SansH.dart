@@ -3185,10 +3185,10 @@ class _TenthSectionState extends State<TenthSection> {
               'à la DDPP de la Vienne',
               'au SDJES du département d\'origine'
             ],
-            defaultChoices: widget.sansHData.copyToTest.split(','),
+            defaultChoices: widget.sansHData.copyTo,
             onChanged: (value) {
               setState(() {
-                widget.sansHData.copyToTest = value.join(',');
+                widget.sansHData.copyTo = value;
               });
             },
           ),
