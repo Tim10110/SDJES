@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7230219140994926528",
-      "lastPropertyId": "177:1021780385987541723",
+      "lastPropertyId": "189:1536738025429283539",
       "name": "SansHModel",
       "properties": [
         {
@@ -893,6 +893,66 @@
           "id": "177:1021780385987541723",
           "name": "signatureAuthoriteJSON",
           "type": 30
+        },
+        {
+          "id": "178:7275550294760569373",
+          "name": "totalDeclares",
+          "type": 9
+        },
+        {
+          "id": "179:3168920267779324874",
+          "name": "totalPresents",
+          "type": 9
+        },
+        {
+          "id": "180:2100707990709475481",
+          "name": "totalHandi",
+          "type": 9
+        },
+        {
+          "id": "181:605956329298023204",
+          "name": "totalAnim",
+          "type": 9
+        },
+        {
+          "id": "182:3493141175088671921",
+          "name": "totalAnimRequis",
+          "type": 9
+        },
+        {
+          "id": "183:962526986438301680",
+          "name": "observationsTempsDePrep",
+          "type": 9
+        },
+        {
+          "id": "184:5017193479325265663",
+          "name": "radioUtilisationMinibus",
+          "type": 9
+        },
+        {
+          "id": "185:2556906633840225910",
+          "name": "radioTransportsCommuns",
+          "type": 9
+        },
+        {
+          "id": "186:3055967972914229799",
+          "name": "radioCarnetsRoute",
+          "type": 9
+        },
+        {
+          "id": "187:266781623747953957",
+          "name": "radioConnaissanceSecurite",
+          "type": 9
+        },
+        {
+          "id": "188:1600000989809565342",
+          "name": "radioQualiteConduite",
+          "type": 9
+        },
+        {
+          "id": "189:1536738025429283539",
+          "name": "radioConditionsTravail",
+          "type": 9
         }
       ],
       "relations": []

@@ -217,6 +217,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
               186,
               187,
               188,
+              567
+            ],
+            const <int>[
+              568,
+              569,
+              570,
+              571,
+              572,
               189,
               190,
               191,
@@ -657,17 +665,23 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'entre14et17AnsDeclares', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalDeclares', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'moinsDe6AnsPresents', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'entre6et13AnsPresents', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'entre14et17AnsPresents', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalPresents', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'moinsDe6AnsHandi', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'entre6et13AnsHandi', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'entre14et17AnsHandi', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalHandi', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'radio2324_13', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
@@ -695,9 +709,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'nombreAnimNonQualif', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalAnim', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'encadrementRequisMoinsDe6', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'encadrementRequisPlusDe6', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalAnimRequis', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'radio227_2', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
@@ -727,6 +745,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'observationsSavoirComportement', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'observationsQualifPersonnel', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'observationsTempsDePrep', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'observationsReuBilan', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
@@ -795,6 +815,18 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'radioAqua', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'radioAutorisations', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'radioUtilisationMinibus', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'radioTransportsCommuns', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'radioCarnetsRoute', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'radioConnaissanceSecurite', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'radioQualiteConduite', 134348805, 0,
+            const prefix0.Reflector(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'radioConditionsTravail', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'observationsVaccination', 134348805, 0,
             const prefix0.Reflector(), -1, -1, -1, null, const []),
@@ -1381,11 +1413,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(r'', 64, 0, -1, -1, -1, null, const <int>[],
             const prefix0.Reflector(), const []),
         r.MethodMirrorImpl(r'==', 2097154, -1, -1, -1, -1, null,
-            const <int>[177], const prefix0.Reflector(), const []),
+            const <int>[189], const prefix0.Reflector(), const []),
         r.MethodMirrorImpl(r'toString', 2097154, -1, -1, -1, -1, null,
             const <int>[], const prefix0.Reflector(), const []),
         r.MethodMirrorImpl(r'noSuchMethod', 524290, -1, -1, -1, -1, null,
-            const <int>[178], const prefix0.Reflector(), const []),
+            const <int>[190], const prefix0.Reflector(), const []),
         r.MethodMirrorImpl(r'hashCode', 2097155, -1, -1, -1, -1, null,
             const <int>[], const prefix0.Reflector(), const []),
         r.MethodMirrorImpl(r'runtimeType', 2097155, -1, -1, -1, -1, null,
@@ -1829,17 +1861,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.entre6et13AnsDeclares,
         r'entre14et17AnsDeclares': (dynamic instance) =>
             instance.entre14et17AnsDeclares,
+        r'totalDeclares': (dynamic instance) => instance.totalDeclares,
         r'moinsDe6AnsPresents': (dynamic instance) =>
             instance.moinsDe6AnsPresents,
         r'entre6et13AnsPresents': (dynamic instance) =>
             instance.entre6et13AnsPresents,
         r'entre14et17AnsPresents': (dynamic instance) =>
             instance.entre14et17AnsPresents,
+        r'totalPresents': (dynamic instance) => instance.totalPresents,
         r'moinsDe6AnsHandi': (dynamic instance) => instance.moinsDe6AnsHandi,
         r'entre6et13AnsHandi': (dynamic instance) =>
             instance.entre6et13AnsHandi,
         r'entre14et17AnsHandi': (dynamic instance) =>
             instance.entre14et17AnsHandi,
+        r'totalHandi': (dynamic instance) => instance.totalHandi,
         r'radio2324_13': (dynamic instance) => instance.radio2324_13,
         r'radio2324_14': (dynamic instance) => instance.radio2324_14,
         r'observations2324_13': (dynamic instance) =>
@@ -1861,10 +1896,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.nombreAnimStagiaires,
         r'nombreAnimNonQualif': (dynamic instance) =>
             instance.nombreAnimNonQualif,
+        r'totalAnim': (dynamic instance) => instance.totalAnim,
         r'encadrementRequisMoinsDe6': (dynamic instance) =>
             instance.encadrementRequisMoinsDe6,
         r'encadrementRequisPlusDe6': (dynamic instance) =>
             instance.encadrementRequisPlusDe6,
+        r'totalAnimRequis': (dynamic instance) => instance.totalAnimRequis,
         r'radio227_2': (dynamic instance) => instance.radio227_2,
         r'observations227_2': (dynamic instance) => instance.observations227_2,
         r'radioArrete3_5': (dynamic instance) => instance.radioArrete3_5,
@@ -1881,6 +1918,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.observationsSavoirComportement,
         r'observationsQualifPersonnel': (dynamic instance) =>
             instance.observationsQualifPersonnel,
+        r'observationsTempsDePrep': (dynamic instance) =>
+            instance.observationsTempsDePrep,
         r'observationsReuBilan': (dynamic instance) =>
             instance.observationsReuBilan,
         r'observationsEvalStg': (dynamic instance) =>
@@ -1944,6 +1983,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'radioAqua': (dynamic instance) => instance.radioAqua,
         r'radioAutorisations': (dynamic instance) =>
             instance.radioAutorisations,
+        r'radioUtilisationMinibus': (dynamic instance) =>
+            instance.radioUtilisationMinibus,
+        r'radioTransportsCommuns': (dynamic instance) =>
+            instance.radioTransportsCommuns,
+        r'radioCarnetsRoute': (dynamic instance) => instance.radioCarnetsRoute,
+        r'radioConnaissanceSecurite': (dynamic instance) =>
+            instance.radioConnaissanceSecurite,
+        r'radioQualiteConduite': (dynamic instance) =>
+            instance.radioQualiteConduite,
+        r'radioConditionsTravail': (dynamic instance) =>
+            instance.radioConditionsTravail,
         r'observationsVaccination': (dynamic instance) =>
             instance.observationsVaccination,
         r'observationsAntecedents': (dynamic instance) =>
@@ -2134,18 +2184,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.entre6et13AnsDeclares = value,
         r'entre14et17AnsDeclares=': (dynamic instance, value) =>
             instance.entre14et17AnsDeclares = value,
+        r'totalDeclares=': (dynamic instance, value) =>
+            instance.totalDeclares = value,
         r'moinsDe6AnsPresents=': (dynamic instance, value) =>
             instance.moinsDe6AnsPresents = value,
         r'entre6et13AnsPresents=': (dynamic instance, value) =>
             instance.entre6et13AnsPresents = value,
         r'entre14et17AnsPresents=': (dynamic instance, value) =>
             instance.entre14et17AnsPresents = value,
+        r'totalPresents=': (dynamic instance, value) =>
+            instance.totalPresents = value,
         r'moinsDe6AnsHandi=': (dynamic instance, value) =>
             instance.moinsDe6AnsHandi = value,
         r'entre6et13AnsHandi=': (dynamic instance, value) =>
             instance.entre6et13AnsHandi = value,
         r'entre14et17AnsHandi=': (dynamic instance, value) =>
             instance.entre14et17AnsHandi = value,
+        r'totalHandi=': (dynamic instance, value) =>
+            instance.totalHandi = value,
         r'radio2324_13=': (dynamic instance, value) =>
             instance.radio2324_13 = value,
         r'radio2324_14=': (dynamic instance, value) =>
@@ -2172,10 +2228,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.nombreAnimStagiaires = value,
         r'nombreAnimNonQualif=': (dynamic instance, value) =>
             instance.nombreAnimNonQualif = value,
+        r'totalAnim=': (dynamic instance, value) => instance.totalAnim = value,
         r'encadrementRequisMoinsDe6=': (dynamic instance, value) =>
             instance.encadrementRequisMoinsDe6 = value,
         r'encadrementRequisPlusDe6=': (dynamic instance, value) =>
             instance.encadrementRequisPlusDe6 = value,
+        r'totalAnimRequis=': (dynamic instance, value) =>
+            instance.totalAnimRequis = value,
         r'radio227_2=': (dynamic instance, value) =>
             instance.radio227_2 = value,
         r'observations227_2=': (dynamic instance, value) =>
@@ -2198,6 +2257,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.observationsSavoirComportement = value,
         r'observationsQualifPersonnel=': (dynamic instance, value) =>
             instance.observationsQualifPersonnel = value,
+        r'observationsTempsDePrep=': (dynamic instance, value) =>
+            instance.observationsTempsDePrep = value,
         r'observationsReuBilan=': (dynamic instance, value) =>
             instance.observationsReuBilan = value,
         r'observationsEvalStg=': (dynamic instance, value) =>
@@ -2265,6 +2326,18 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'radioAqua=': (dynamic instance, value) => instance.radioAqua = value,
         r'radioAutorisations=': (dynamic instance, value) =>
             instance.radioAutorisations = value,
+        r'radioUtilisationMinibus=': (dynamic instance, value) =>
+            instance.radioUtilisationMinibus = value,
+        r'radioTransportsCommuns=': (dynamic instance, value) =>
+            instance.radioTransportsCommuns = value,
+        r'radioCarnetsRoute=': (dynamic instance, value) =>
+            instance.radioCarnetsRoute = value,
+        r'radioConnaissanceSecurite=': (dynamic instance, value) =>
+            instance.radioConnaissanceSecurite = value,
+        r'radioQualiteConduite=': (dynamic instance, value) =>
+            instance.radioQualiteConduite = value,
+        r'radioConditionsTravail=': (dynamic instance, value) =>
+            instance.radioConditionsTravail = value,
         r'observationsVaccination=': (dynamic instance, value) =>
             instance.observationsVaccination = value,
         r'observationsAntecedents=': (dynamic instance, value) =>

@@ -11,12 +11,6 @@ import 'package:flutter_application_2/objectbox_core.dart';
 import 'package:signature/signature.dart';
 
 class SansHModel extends objectbox.SansHModel {
-  String totalDeclares = '';
-  String totalPresents = '';
-  String totalHandi = '';
-  String totalAnim = '';
-  String totalAnimRequis = '';
-  String observationsTempsDePrep = ''; 
   String radioEtape1 = ''; 
   String radioEape2 = ''; 
   String nomPrenomEncadrantACM = ''; 

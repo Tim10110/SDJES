@@ -58,6 +58,9 @@ class SansHData {
   radioAqua = '',
   radioAutorisations = '',
   
+  radioUtilisationMinibus ='', radioTransportsCommuns = '', radioCarnetsRoute = '',
+  radioConnaissanceSecurite = '', radioQualiteConduite = '', radioConditionsTravail = '',
+
   // Section 6
   observationsVaccination = '',observationsAntecedents = '',observationsMineurTraitement = '', 
   observationsAllergies = '', observationsOrdonnances = '', observationsRegistreSoins = '', 
