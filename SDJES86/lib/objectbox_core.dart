@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_application_2/main.dart';
 import 'package:objectbox/objectbox.dart';
 import 'dart:core';
@@ -238,6 +240,9 @@ class SansHModel {
 
   List<String> copyTo = [];
   List<String> signatureAuthoriteJSON = [];
+
+  @Property(type: PropertyType.byteVector)
+  Uint8List signature = Uint8List.fromList([]);
 }
 
 @reflector
@@ -246,18 +251,14 @@ class ActiviteData {
   @Id()
   int activiteSHId = 0;
 
+  int formSHID = 0;
   String nomActivite = '';
   int categorie = 1; 
   List<String> typeActivite = []; // Type d'activité pour la catégorie 1
-  String? encadrantNomPrenom; // Nom/prenom de l'encadrant pour catégorie 2 et 3
-  String? encadrantQualif; // Qualification de l'encadrant pour catégorie 2 et 3
-  String? numCartePro; // Numero de la carte professionnelle pour catégorie 3
-}
-
-@Entity()
-class ActiviteDataList {
-  @Id()
-  int activiteSHListId = 0;
-
-  List<ActiviteData> activities = [];
+  String denominationPrestataire = '';
+  String encadrantNomPrenom2 = ''; // Nom/prenom de l'encadrant pour catégorie 2
+  String encadrantQualif2 = '';
+  String encadrantNomPrenom3 = ''; // Nom/prenom de l'encadrant pour catégorie 3
+  String encadrantQualif3 = ''; 
+  String numCartePro = ''; // Numero de la carte professionnelle pour catégorie 3
 }

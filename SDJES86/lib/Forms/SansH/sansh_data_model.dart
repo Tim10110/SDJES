@@ -22,7 +22,6 @@ class SansHModel extends objectbox.SansHModel {
   List<ActiviteData> activitesSecu = [];
   final prescriptionAuthoritySignatureController = SignatureController();
   List<Point> signatureAuthorite = [];
-  Uint8List signatureBytes = Uint8List.fromList([]);
 
   String pointToJSON(Point p) {
     return jsonEncode({
@@ -35,9 +34,7 @@ class SansHModel extends objectbox.SansHModel {
   Map offsetToJSON(Offset o) {
     return {
       'dx': o.dx,
-      'dy': o.dy,
-      'distance': o.distance,
-      'direction': o.direction
+      'dy': o.dy
     };
   }
 

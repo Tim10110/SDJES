@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7230219140994926528",
-      "lastPropertyId": "189:1536738025429283539",
+      "lastPropertyId": "191:1178620305805006093",
       "name": "SansHModel",
       "properties": [
         {
@@ -953,13 +953,18 @@
           "id": "189:1536738025429283539",
           "name": "radioConditionsTravail",
           "type": 9
+        },
+        {
+          "id": "191:1178620305805006093",
+          "name": "signature",
+          "type": 23
         }
       ],
       "relations": []
     },
     {
       "id": "2:4055810680109453124",
-      "lastPropertyId": "7:4547862414286075582",
+      "lastPropertyId": "13:9119888298771329043",
       "name": "ActiviteData",
       "properties": [
         {
@@ -984,33 +989,39 @@
           "type": 30
         },
         {
-          "id": "5:2445636371955004835",
-          "name": "encadrantNomPrenom",
-          "type": 9
-        },
-        {
-          "id": "6:6144219270937496809",
-          "name": "encadrantQualif",
-          "type": 9
-        },
-        {
           "id": "7:4547862414286075582",
           "name": "numCartePro",
           "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "3:359253027851998056",
-      "lastPropertyId": "1:817509083813015904",
-      "name": "ActiviteDataList",
-      "properties": [
+        },
         {
-          "id": "1:817509083813015904",
-          "name": "activiteSHListId",
-          "type": 6,
-          "flags": 1
+          "id": "8:7702965951712063157",
+          "name": "denominationPrestataire",
+          "type": 9
+        },
+        {
+          "id": "9:7060842509702196004",
+          "name": "encadrantNomPrenom2",
+          "type": 9
+        },
+        {
+          "id": "10:5054638725386217718",
+          "name": "encadrantQualif2",
+          "type": 9
+        },
+        {
+          "id": "11:7370253734156519572",
+          "name": "encadrantNomPrenom3",
+          "type": 9
+        },
+        {
+          "id": "12:4835131012883864076",
+          "name": "encadrantQualif3",
+          "type": 9
+        },
+        {
+          "id": "13:9119888298771329043",
+          "name": "formSHID",
+          "type": 6
         }
       ],
       "relations": []
@@ -1022,9 +1033,16 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    359253027851998056
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    2445636371955004835,
+    6144219270937496809,
+    817509083813015904,
+    2875414437704683190
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

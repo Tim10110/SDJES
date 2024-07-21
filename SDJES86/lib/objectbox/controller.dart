@@ -29,29 +29,29 @@ class ObjectBox {
     draftsBox.remove(id);
   }
 
-  void emptySansH(int id) {
+  void emptySansH() {
     final draftsBox = sansHStore.box<objectbox.SansHModel>();
     draftsBox.removeAll();
   }
 
-  Future<int> storeActivite(objectbox.ActiviteDataList data) async {
-    final box = activiteStore.box<objectbox.ActiviteDataList>();
+  Future<int> storeActivite(objectbox.ActiviteData data) async {
+    final box = activiteStore.box<objectbox.ActiviteData>();
     int id = box.put(data);
     return id;
   }
 
-  List<objectbox.ActiviteDataList> retrieveActivite() {
-    final draftsBox = activiteStore.box<objectbox.ActiviteDataList>();
+  List<objectbox.ActiviteData> retrieveActivite() {
+    final draftsBox = activiteStore.box<objectbox.ActiviteData>();
     return draftsBox.getAll();
   }
 
   void removeActivite(int id) {
-    final draftsBox = sansHStore.box<objectbox.ActiviteDataList>();
+    final draftsBox = sansHStore.box<objectbox.ActiviteData>();
     draftsBox.remove(id);
   }
 
-  void emptyActivite(int id) {
-    final draftsBox = activiteStore.box<objectbox.ActiviteDataList>();
+  void emptyActivite() {
+    final draftsBox = activiteStore.box<objectbox.ActiviteData>();
     draftsBox.removeAll();
   }
 }

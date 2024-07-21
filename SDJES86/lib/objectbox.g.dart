@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 7230219140994926528),
       name: 'SansHModel',
-      lastPropertyId: const obx_int.IdUid(189, 1536738025429283539),
+      lastPropertyId: const obx_int.IdUid(191, 1178620305805006093),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -969,6 +969,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(189, 1536738025429283539),
             name: 'radioConditionsTravail',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(191, 1178620305805006093),
+            name: 'signature',
+            type: 23,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -976,7 +981,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(2, 4055810680109453124),
       name: 'ActiviteData',
-      lastPropertyId: const obx_int.IdUid(7, 4547862414286075582),
+      lastPropertyId: const obx_int.IdUid(13, 9119888298771329043),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -1000,34 +1005,40 @@ final _entities = <obx_int.ModelEntity>[
             type: 30,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 2445636371955004835),
-            name: 'encadrantNomPrenom',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 6144219270937496809),
-            name: 'encadrantQualif',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
             id: const obx_int.IdUid(7, 4547862414286075582),
             name: 'numCartePro',
             type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
-  obx_int.ModelEntity(
-      id: const obx_int.IdUid(3, 359253027851998056),
-      name: 'ActiviteDataList',
-      lastPropertyId: const obx_int.IdUid(1, 817509083813015904),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
+            flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 817509083813015904),
-            name: 'activiteSHListId',
+            id: const obx_int.IdUid(8, 7702965951712063157),
+            name: 'denominationPrestataire',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7060842509702196004),
+            name: 'encadrantNomPrenom2',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5054638725386217718),
+            name: 'encadrantQualif2',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 7370253734156519572),
+            name: 'encadrantNomPrenom3',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4835131012883864076),
+            name: 'encadrantQualif3',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 9119888298771329043),
+            name: 'formSHID',
             type: 6,
-            flags: 1)
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -1072,9 +1083,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
       lastIndexId: const obx_int.IdUid(0, 0),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [359253027851998056],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [
+        2445636371955004835,
+        6144219270937496809,
+        817509083813015904,
+        2875414437704683190
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -1406,7 +1422,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.radioQualiteConduite);
           final radioConditionsTravailOffset =
               fbb.writeString(object.radioConditionsTravail);
-          fbb.startTable(190);
+          final signatureOffset = fbb.writeListInt8(object.signature);
+          fbb.startTable(192);
           fbb.addInt64(0, object.formSHId);
           fbb.addOffset(1, visiteRealiseeParOffset);
           fbb.addOffset(2, enPresenceDeOffset);
@@ -1596,6 +1613,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(186, radioConnaissanceSecuriteOffset);
           fbb.addOffset(187, radioQualiteConduiteOffset);
           fbb.addOffset(188, radioConditionsTravailOffset);
+          fbb.addOffset(190, signatureOffset);
           fbb.finish(fbb.endTable());
           return object.formSHId;
         },
@@ -2096,7 +2114,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
                     .vTableGet(buffer, rootOffset, 378, '')
             ..radioConditionsTravail =
                 const fb.StringReader(asciiOptimization: true)
-                    .vTableGet(buffer, rootOffset, 380, '');
+                    .vTableGet(buffer, rootOffset, 380, '')
+            ..signature = const fb.Uint8ListReader(lazy: false)
+                .vTableGet(buffer, rootOffset, 384, Uint8List(0)) as Uint8List;
 
           return object;
         }),
@@ -2112,23 +2132,29 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final nomActiviteOffset = fbb.writeString(object.nomActivite);
           final typeActiviteOffset = fbb.writeList(
               object.typeActivite.map(fbb.writeString).toList(growable: false));
-          final encadrantNomPrenomOffset = object.encadrantNomPrenom == null
-              ? null
-              : fbb.writeString(object.encadrantNomPrenom!);
-          final encadrantQualifOffset = object.encadrantQualif == null
-              ? null
-              : fbb.writeString(object.encadrantQualif!);
-          final numCarteProOffset = object.numCartePro == null
-              ? null
-              : fbb.writeString(object.numCartePro!);
-          fbb.startTable(8);
+          final numCarteProOffset = fbb.writeString(object.numCartePro);
+          final denominationPrestataireOffset =
+              fbb.writeString(object.denominationPrestataire);
+          final encadrantNomPrenom2Offset =
+              fbb.writeString(object.encadrantNomPrenom2);
+          final encadrantQualif2Offset =
+              fbb.writeString(object.encadrantQualif2);
+          final encadrantNomPrenom3Offset =
+              fbb.writeString(object.encadrantNomPrenom3);
+          final encadrantQualif3Offset =
+              fbb.writeString(object.encadrantQualif3);
+          fbb.startTable(14);
           fbb.addInt64(0, object.activiteSHId);
           fbb.addOffset(1, nomActiviteOffset);
           fbb.addInt64(2, object.categorie);
           fbb.addOffset(3, typeActiviteOffset);
-          fbb.addOffset(4, encadrantNomPrenomOffset);
-          fbb.addOffset(5, encadrantQualifOffset);
           fbb.addOffset(6, numCarteProOffset);
+          fbb.addOffset(7, denominationPrestataireOffset);
+          fbb.addOffset(8, encadrantNomPrenom2Offset);
+          fbb.addOffset(9, encadrantQualif2Offset);
+          fbb.addOffset(10, encadrantNomPrenom3Offset);
+          fbb.addOffset(11, encadrantQualif3Offset);
+          fbb.addInt64(12, object.formSHID);
           fbb.finish(fbb.endTable());
           return object.activiteSHId;
         },
@@ -2147,37 +2173,23 @@ obx_int.ModelDefinition getObjectBoxModel() {
                     fb.StringReader(asciiOptimization: true),
                     lazy: false)
                 .vTableGet(buffer, rootOffset, 10, [])
-            ..encadrantNomPrenom =
-                const fb.StringReader(asciiOptimization: true)
-                    .vTableGetNullable(buffer, rootOffset, 12)
-            ..encadrantQualif = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 14)
             ..numCartePro = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 16);
-
-          return object;
-        }),
-    ActiviteDataList: obx_int.EntityDefinition<ActiviteDataList>(
-        model: _entities[2],
-        toOneRelations: (ActiviteDataList object) => [],
-        toManyRelations: (ActiviteDataList object) => {},
-        getId: (ActiviteDataList object) => object.activiteSHListId,
-        setId: (ActiviteDataList object, int id) {
-          object.activiteSHListId = id;
-        },
-        objectToFB: (ActiviteDataList object, fb.Builder fbb) {
-          fbb.startTable(2);
-          fbb.addInt64(0, object.activiteSHListId);
-          fbb.finish(fbb.endTable());
-          return object.activiteSHListId;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = ActiviteDataList()
-            ..activiteSHListId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+                .vTableGet(buffer, rootOffset, 16, '')
+            ..denominationPrestataire =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 18, '')
+            ..encadrantNomPrenom2 =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 20, '')
+            ..encadrantQualif2 = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 22, '')
+            ..encadrantNomPrenom3 =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 24, '')
+            ..encadrantQualif3 = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 26, '')
+            ..formSHID =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
 
           return object;
         })
@@ -2943,6 +2955,10 @@ class SansHModel_ {
   /// See [SansHModel.radioConditionsTravail].
   static final radioConditionsTravail =
       obx.QueryStringProperty<SansHModel>(_entities[0].properties[188]);
+
+  /// See [SansHModel.signature].
+  static final signature =
+      obx.QueryByteVectorProperty<SansHModel>(_entities[0].properties[189]);
 }
 
 /// [ActiviteData] entity fields to define ObjectBox queries.
@@ -2963,22 +2979,31 @@ class ActiviteData_ {
   static final typeActivite =
       obx.QueryStringVectorProperty<ActiviteData>(_entities[1].properties[3]);
 
-  /// See [ActiviteData.encadrantNomPrenom].
-  static final encadrantNomPrenom =
-      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[4]);
-
-  /// See [ActiviteData.encadrantQualif].
-  static final encadrantQualif =
-      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[5]);
-
   /// See [ActiviteData.numCartePro].
   static final numCartePro =
-      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[6]);
-}
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[4]);
 
-/// [ActiviteDataList] entity fields to define ObjectBox queries.
-class ActiviteDataList_ {
-  /// See [ActiviteDataList.activiteSHListId].
-  static final activiteSHListId =
-      obx.QueryIntegerProperty<ActiviteDataList>(_entities[2].properties[0]);
+  /// See [ActiviteData.denominationPrestataire].
+  static final denominationPrestataire =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[5]);
+
+  /// See [ActiviteData.encadrantNomPrenom2].
+  static final encadrantNomPrenom2 =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[6]);
+
+  /// See [ActiviteData.encadrantQualif2].
+  static final encadrantQualif2 =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[7]);
+
+  /// See [ActiviteData.encadrantNomPrenom3].
+  static final encadrantNomPrenom3 =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[8]);
+
+  /// See [ActiviteData.encadrantQualif3].
+  static final encadrantQualif3 =
+      obx.QueryStringProperty<ActiviteData>(_entities[1].properties[9]);
+
+  /// See [ActiviteData.formSHID].
+  static final formSHID =
+      obx.QueryIntegerProperty<ActiviteData>(_entities[1].properties[10]);
 }

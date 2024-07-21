@@ -181,16 +181,31 @@ class _DataState extends State<Data> {
     final bytes = data.buffer.asUint8List();
 
     for(int i = 0; i < sansHList.length; i++) {
+      List<objectbox.ActiviteData> activiteData = (objectBox.retrieveActivite()).where((e) => e.formSHID == sansHList[i].formSHId).toList();
       final docx = await DocxTemplate.fromBytes(bytes);
       Content c = Content();
       
       InstanceMirror aMirror = reflector.reflect(sansHList[i]);
       List<String> keys = aMirror.type.declarations.keys.toList();
       keys.remove(aMirror.type.simpleName);
-      List<String> values = List.generate(keys.length, (i) => (aMirror.invokeGetter(keys[i])).toString());
+      keys.remove('signatureAuthoriteJSON'); //We don't need this in Word file. This is only needed to store the signature data in JSON for modifying form
+      keys.remove('signature'); //We add this image to Word file separately
+
+      List<String> values = List.generate(keys.length, (i) => aMirror.invokeGetter(keys[i]).toString());
       for(int x = 0; x < keys.length; x++) {
-        c.add(TextContent(keys[x], /*values[x]*/Random().nextDouble() * 1000000));
+        c.add(TextContent(keys[x], values[x]));
       }
+      
+      for(int j = 0; j < activiteData.length; j++) {
+        InstanceMirror bMirror = reflector.reflect(activiteData[j]);
+        List<String> keys = bMirror.type.declarations.keys.toList();
+        keys.remove(bMirror.type.simpleName);
+        List<String> values = List.generate(keys.length, (i) => (bMirror.invokeGetter(keys[i])).toString());
+        for(int x = 0; x < keys.length; x++) {
+          c.add(TextContent('${keys[x]}_$j', values[x].toString()));
+        }
+      }
+      c.add(ImageContent('signature', aMirror.invokeGetter('signature') as Uint8List));
       
       final d = await docx.generate(c);
       Directory directory = Directory('C:/Users/joecl/OneDrive/Documents/test'); //Directory('/storage/emulated/0/Download');
@@ -198,7 +213,6 @@ class _DataState extends State<Data> {
       final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
       final of = File(filepath);
       of.createSync();
-      print(of.existsSync());
       if (d != null) {
         await of.writeAsBytes(d);
         print('Document ${of.path} generated! and ${of.existsSync()} exists');
@@ -448,14 +462,12 @@ class _DataState extends State<Data> {
   void _querySH() async {
     final allRowsSH = await DatabaseHelper().queryAllRowsSH();
     print('query all rows:');
-    allRowsSH.forEach(print);
     displaySH = allRowsSH;
     setState(() {});
   }
 
   void _retrieveSH() async {
     final _dataSH = objectBox.retrieveSansH();
-    _dataSH.forEach(print);
     displaySHModel = _dataSH;
     setState(() {});
   }

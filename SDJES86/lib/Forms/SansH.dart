@@ -16,18 +16,6 @@ import 'dart:async';
 import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class ActiviteData {
-  String nomActivite = '';
-  int categorie = 1; 
-  List<String> typeActivite = []; // Type d'activité pour la catégorie 1
-  String? denominationPrestataire;
-  String? encadrantNomPrenom2; // Nom/prenom de l'encadrant pour catégorie 2
-  String? encadrantQualif2;
-  String? encadrantNomPrenom3; // Nom/prenom de l'encadrant pour catégorie 3
-  String? encadrantQualif3; 
-  String? numCartePro; // Numero de la carte professionnelle pour catégorie 3
-}
-
 class SansH extends StatefulWidget {
   const SansH({super.key});
 
@@ -180,9 +168,9 @@ class _FirstPageSHState extends State<FirstPageSH> {
           if (_currentStep == sectionTitles.length - 1)
             FloatingActionButton.extended(
               heroTag: null,
-              onPressed: () {
+              onPressed: () async {
                 print(" inserting data .. ");
-                handleSignature();
+                final _ = await handleSignature();
                 insert();
               // Insert les data dans la db et revenir au menu data
               },
@@ -234,14 +222,18 @@ class _FirstPageSHState extends State<FirstPageSH> {
     );
   }
 
-  void handleSignature() async {
+  Future<void> handleSignature() async {
     widget.sansHData.signatureAuthorite = widget.sansHData.prescriptionAuthoritySignatureController.points;
-    widget.sansHData.signatureBytes = await widget.sansHData.prescriptionAuthoritySignatureController.toPngBytes() ?? Uint8List.fromList([]);
+    widget.sansHData.signature = Uint8List.fromList(await widget.sansHData.prescriptionAuthoritySignatureController.toPngBytes() ?? []);
+    widget.sansHData.signatureAuthoriteJSON = widget.sansHData.signatureAuthorite.map((e) => widget.sansHData.pointToJSON(e)).toList();
   }
 
   void insert() async {
-    int id = await widget.sansHData.insertToDB();
-    print(id);
+    final int id = await widget.sansHData.insertToDB();
+    for(int i = 0; i < widget.sansHData.activitesSecu.length; i++) {
+      widget.sansHData.activitesSecu[i].formSHID = id;
+      await objectBox.storeActivite(widget.sansHData.activitesSecu[i]);
+    }
     /*
     final id = await DatabaseHelper().insertSH(row);
 
