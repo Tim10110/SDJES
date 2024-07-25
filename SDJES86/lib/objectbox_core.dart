@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_application_2/main.dart';
@@ -261,4 +262,10 @@ class ActiviteData {
   String encadrantNomPrenom3 = ''; // Nom/prenom de l'encadrant pour catégorie 3
   String encadrantQualif3 = ''; 
   String numCartePro = ''; // Numero de la carte professionnelle pour catégorie 3
+}
+
+@reflector
+@Entity()
+class AvecHModel {
+  
 }

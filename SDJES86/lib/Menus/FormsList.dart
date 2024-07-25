@@ -275,9 +275,10 @@ class _DataState extends State<Data> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        // Action à effectuer lorsque le bouton Modifier est cliqué
+                        if (selectedIndex!=-1) { // Action à effectuer lorsque le bouton Modifier est cliqué
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SansH(sansHData: displaySHModel[selectedIndex])));
                         setState(() {});
+                        }
                       },
                       icon: const Icon(Icons.edit),
                       label: const Text('Modifier'),
