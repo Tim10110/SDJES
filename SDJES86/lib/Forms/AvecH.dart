@@ -5,20 +5,13 @@ import 'package:flutter_application_2/Menus/FormsList.dart';
 import 'package:flutter_application_2/Menus/Home.dart';
 import 'package:intl/intl.dart';
 import 'package:signature/signature.dart';
+import 'package:flutter_application_2/objectbox/controller.dart';
+import 'package:flutter_application_2/objectbox_core.dart' as objectbox;
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:flutter_application_2/DB/Db_manager.dart';
 import 'package:flutter_application_2/components/my_textfields.dart';
-
-
-void main() {
-  //sqfliteFfiInit();
-  //databaseFactory = databaseFactoryFfi;
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const AvecH());
-}
-
 
 class AvecH extends StatefulWidget {
   const AvecH({super.key});
@@ -4233,115 +4226,3 @@ class ActiviteItem extends StatelessWidget {
     );
   }
 }
-
-
-class DataSaver {
-  Future<void> saveDataToFile(AvecHData avecHData) async {
-    // Obtenir le répertoire de stockage externe
-    Directory? directory = await getExternalStorageDirectory();
-    String fileName = 'Rapport_Controle_Avec_Hebergement_${avecHData.dateDuControle}_${avecHData.visiteRealiseePar}.txt';
-
-    if (directory != null) {
-      // Créer un fichier dans le répertoire de stockage externe
-      final file = File('${directory.path}/$fileName');
-
-      IOSink sink = file.openWrite();
-
-      // Écrire le contenu de chaque variable dans le fichier
-      sink.writeln('                        Rapport                        ');
-      sink.writeln('de controle et d\'évalutation d\'un accueil collectif de mineurs');
-      sink.writeln('                    Avec Hebergement');
-      sink.writeln('\n----------INFORMATIONS RELATIVES A LA VISITE----------');
-      sink.writeln('Visite réalisée par: ${avecHData.visiteRealiseePar}');
-      sink.writeln('En présence de: ${avecHData.enPresenceDe}');
-      sink.writeln('Date de la visite: ${avecHData.dateVisite}');
-      sink.writeln('Organisation: ${avecHData.denomination}');
-      //inopine progra
-      //date dateVisite
-      sink.writeln('\n----------RENSEIGNEMENTS SUR L’ACCUEIL----------');
-      sink.writeln('Denomination de l\'organisateur: ${avecHData.denomination}');
-      sink.writeln('Adresse du siège ou du domicile de l’organisateur: ${avecHData.adresse}');
-      sink.writeln('Lieu et adresse du déroulement de l’ACM: ${avecHData.lieu}');
-      sink.writeln('Numéro de déclaration: ${avecHData.numeroDeclaration}');
-      sink.writeln('Début du déroulement de l\'ACM: ${avecHData.numeroDeclaration}');
-      sink.writeln('Fin du déroulement de l\'ACM: ${avecHData.numeroDeclaration}');
-      sink.writeln('Type de séjour: ${avecHData.radioTypeAccueil}');
-      sink.writeln('\n-----DOCUMENTS A VERIFIER-----');
-      sink.writeln('•	Art. L. 227-5 CASF : ${avecHData.radio227_5}');
-      sink.writeln('Observations Art. L. 227-5 CASF : ${avecHData.observations227_5}');
-      sink.writeln('•	Art. R. 227-29 CASF : ${avecHData.radio227_29}');
-      sink.writeln('Observations Art. R. 227-29 CASF: ${avecHData.observations227_29}');
-      
-      sink.writeln('\n----------EFFECTIFS DE MINEURS----------');
-      sink.writeln('Capacité d\'accueil du local: ${avecHData.capaciteAccueil}');     
-      sink.writeln('Moins de 6 ans déclarés: ${avecHData.moinsDe6AnsDeclares}');
-      sink.writeln('Entre 6 et 13 ans déclarés: ${avecHData.entre6et13AnsDeclares}');
-      sink.writeln('Entre 14 et 17 ans déclarés: ${avecHData.entre14et17AnsDeclares}');
-      sink.writeln('Total déclarés: ${avecHData.totalDeclares}');
-      sink.writeln('Moins de 6 ans présents: ${avecHData.moinsDe6AnsPresents}');
-      sink.writeln('Entre 6 et 13 ans présents: ${avecHData.entre6et13AnsPresents}');
-      sink.writeln('Entre 14 et 17 ans présents: ${avecHData.entre14et17AnsPresents}');
-      sink.writeln('Total présents: ${avecHData.totalPresents}');
-      sink.writeln('Moins de 6 ans en situation de handicap: ${avecHData.moinsDe6AnsHandi}');
-      sink.writeln('Entre 6 et 13 ans en situation de handicap: ${avecHData.entre6et13AnsHandi}');
-      sink.writeln('Entre 14 et 17 ans en situation de handicap: ${avecHData.entre14et17AnsHandi}');
-      sink.writeln('Total en situation de handicap: ${avecHData.totalHandi}');
-      sink.writeln('\n-----DOCUMENTS A VERIFIER-----');
-      sink.writeln('PMI •	Art. R. 2324-13 CASF: ${avecHData.radio2324_13}');
-      sink.writeln('Observations PMI Art. R. 2324-13 CASF: ${avecHData.observations2324_13}');
-      sink.writeln('PMI •	Art. R. 2324-14 CASF: ${avecHData.radio2324_14}');
-      sink.writeln('Observations PMI Art. R. 2324-14 CASF: ${avecHData.observations2324_14}');
-      sink.writeln('•	Registre de présence des mineurs: ${avecHData.radioRegistreMineur}');
-      sink.writeln('Observations Registre de présence des mineurs: ${avecHData.observationsRegistreMineur}');
-
-      sink.writeln('\n----------EQUIPE D’ENCADREMENT----------');
-      sink.writeln('Directeur: ${avecHData.directeurNom} ${avecHData.directeurPrenom}, ${avecHData.directeurQualification}');
-      sink.writeln('Titulaire ou Stagiaire: ${avecHData.radioTitulaireStagiaire}');
-      if ('${avecHData.dateRenouvellement}' != '2001-01-01') {
-        sink.writeln('Date de renouvellement BAFD: ${avecHData.dateRenouvellement}');
-      }
-      else if ('${avecHData.dateDebutFormation}' != '2001-01-01') {
-        sink.writeln('Date de début de formation BAFD: ${avecHData.dateDebutFormation}');
-      }
-      else {
-        sink.writeln('Période de dérogation: ${avecHData.dateStartDerogation}  -  ${avecHData.dateEndDerogation}');
-      }
-      sink.writeln('Directeur adjoint: ${avecHData.adjointNom} ${avecHData.adjointPrenom}, ${avecHData.adjointQualif}');
-      sink.writeln('Nombre d\'animateurs qualifiés: ${avecHData.nombreAnimQualif}');
-      sink.writeln('Nombre d\'animateurs stagiaires: ${avecHData.nombreAnimStagiaires}');
-      sink.writeln('Nombre d\'animateurs non qualifiés: ${avecHData.nombreAnimNonQualif}');
-      sink.writeln('Total d\'animateurs en activité: ${avecHData.totalAnim}');
-      sink.writeln('Encadrement requis pour les mineurs de moins de 6 ans: ${avecHData.encadrementRequisMoinsDe6}');
-      sink.writeln('Encadrement requis pour les mineurs de plus de 6 ans: ${avecHData.encadrementRequisPlusDe6}');
-      sink.writeln('Total de l\'encadrement requis: ${avecHData.totalAnimRequis}');
-      sink.writeln('\n-----DOCUMENTS A VERIFIER-----');
-      sink.writeln('Récépissé de déclaration de l’accueil: ${avecHData.radio227_2}');
-      sink.writeln('Observations Récépissé de déclaration de l’accueil: ${avecHData.observations227_2}');
-      sink.writeln('Sincérité de la déclaration: ${avecHData.radioArrete3_5}');
-      sink.writeln('Observations Sincérité de la déclaration : ${avecHData.observationsArrete3_5}');
-      sink.writeln('Diplômes de l’équipe: ${avecHData.radio9_02_07}');
-      sink.writeln('Observations Diplômes de l’équipe: ${avecHData.observations9_02_07}');
-      sink.writeln('Attestation de vaccination de l\'équipe: ${avecHData.radio227_8}');
-      sink.writeln('Observations Attestation de vaccination de l\'équipe: ${avecHData.observations227_8}');
-      sink.writeln('Nom et qualification de la personne désignée pour assurer le suivi sanitaire: ${avecHData.observations227_8}');
-      sink.writeln('\n-----Encadrement et animation de l’équipe-----');
-
-      sink.writeln('Le directeur connait les modalités de communication avec l’organisateur : ${avecHData.observationsCommunicationOrganisateur}');
-      sink.writeln('Savoir comportementaux du personnel: ${avecHData.observationsSavoirComportement}');
-      sink.writeln('Qualification du personnel adaptées aux projets et au public accueilli: ${avecHData.observationsQualifPersonnel}');
-      sink.writeln('Temps de préparation et d\'évaluation de l\'équipe: ${avecHData.observationsTempsDePrep}');
-      sink.writeln('Réunion de bilan entre directeur et équipe: ${avecHData.observationsReuBilan}');
-      sink.writeln('Evaluation des stagiaires avec critères connus et temps d\'échange: ${avecHData.observationsEvalStg}');
-
-
-
-      // Ajoutez ici d'autres lignes pour chaque variable que vous souhaitez sauvegarder
-      // Fermer le fichier
-      await sink.flush();
-      await sink.close();
-    } else {
-      print('Impossible d\'obtenir le répertoire de stockage externe.');
-    }
-  }
-}
-

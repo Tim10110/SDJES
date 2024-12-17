@@ -97,13 +97,13 @@ class _DataState extends State<Data> {
     final d = await docx.generate(c);
     String dirPath = Platform.isWindows ? '${(await getApplicationDocumentsDirectory()).path}/SDJES86' : '/storage/emulated/0/Documents/SDJES86';
     Directory directory = await Directory(dirPath).create(recursive: true);
-    final filepath = '${directory.path}/generated_${Random().nextInt(1000)}.docx';
+    final filepath = '${directory.path}/visite_par_${sansHData.visiteRealiseePar}_le_${sansHData.dateVisite.day}-${sansHData.dateVisite.month}-${sansHData.dateVisite.year}.docx';
     final file = File(filepath);
     file.createSync();
     if (d != null) {
       await file.writeAsBytes(d);
       print('Document ${file.path} generated! and ${file.existsSync()} exists');
-      //deleteSansHData();
+      deleteSansHData();
     }
   }
 
@@ -167,8 +167,8 @@ class _DataState extends State<Data> {
                           borderRadius: BorderRadius.circular(4.0)),
                       margin: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        title: Text('Item ${item.formSHId}'), // Adjust this according to your data structure
-                        subtitle: Text(item.directeurNom), // Adjust this according to your data structure
+                        title: Text('Visite du ${item.dateVisite.day}-${item.dateVisite.month}-${item.dateVisite.year}'), // Adjust this according to your data structure
+                        subtitle: Text('réalisée par ${item.visiteRealiseePar} chez ${item.denomination}'), // Adjust this according to your data structure
                         onTap: () => setState(() => selectedIndex = (selectedIndex == index ? -1 : selectedIndex)),
                         onLongPress: () => setState(() => selectedIndex = (selectedIndex == index ? -1 : index)),
                       ),
@@ -177,37 +177,6 @@ class _DataState extends State<Data> {
                 },
               ),
 
-              /*ListView.builder(
-                itemCount: displaySH.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var item = displaySH[index];
-                  return GestureDetector(
-                    onTap: () {
-                      //FormEditPage(idDB: idDB)
-                    /*  Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FormEditPage(avecHData: item),
-                        ),
-                      );*/
-                    },
-                    child: Card(
-                      margin: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        title: Text(item['nom']), // Adjust this according to your data structure
-                        subtitle: Text(item['description']), // Adjust this according to your data structure
-                        onTap: () {Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                    builder: (context) => FormEditPage(idDB: item['formSHId']),
-                      ),
-                      );
-                      },
-                      ),
-                    ),
-                  );
-                },
-              ),*/
 
               // Contenu pour la catégorie "Avec Hébergement"
               ListView.builder(
@@ -275,7 +244,7 @@ class _DataState extends State<Data> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        if (selectedIndex!=-1) { // Action à effectuer lorsque le bouton Modifier est cliqué
+                        if (selectedIndex!=-1) {    // Action à effectuer lorsque le bouton Modifier est cliqué
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SansH(sansHData: displaySHModel[selectedIndex])));
                         setState(() {});
                         }
